@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>数字子串的和 str2int | SCUGoodGuy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="UVA1673这道题可以用广义后缀自动机，不过陈锋老师给我们讲了一个巧妙地方法，使得这道题可以用普通的后缀自动机做。题目大意：给出$N$个完全由数字组成的字符串。计算将这个$N$的字符串的所有子串转换为整数后先去重再求和的结果，输出其模2012的余数。也就是求其子串的所有本质不同的字符串的和。预处理：首先，我们可以将$N$个字符串拼接起来，拼接的部位可以用一个特殊的分隔符隔开。比如这里我用 &#x3D;&#x3D;:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数字子串的和 str2int">
+<meta property="og:url" content="http://yoursite.com/2020/01/31/%E6%95%B0%E5%AD%97%E5%AD%90%E4%B8%B2%E7%9A%84%E5%92%8C%20str2int/index.html">
+<meta property="og:site_name" content="SCUGoodGuy">
+<meta property="og:description" content="UVA1673这道题可以用广义后缀自动机，不过陈锋老师给我们讲了一个巧妙地方法，使得这道题可以用普通的后缀自动机做。题目大意：给出$N$个完全由数字组成的字符串。计算将这个$N$的字符串的所有子串转换为整数后先去重再求和的结果，输出其模2012的余数。也就是求其子串的所有本质不同的字符串的和。预处理：首先，我们可以将$N$个字符串拼接起来，拼接的部位可以用一个特殊的分隔符隔开。比如这里我用 &#x3D;&#x3D;:">
+<meta property="og:locale" content="zh_CH">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200126165835643.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2020-01-31T10:39:19.599Z">
+<meta property="article:modified_time" content="2020-01-31T10:39:19.632Z">
+<meta property="article:author" content="Awesome">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200126165835643.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70">
+  
+    <link rel="alternate" href="/atom.xml" title="SCUGoodGuy" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SCUGoodGuy</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">蒟蒻的博客</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-数字子串的和 str2int" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/31/%E6%95%B0%E5%AD%97%E5%AD%90%E4%B8%B2%E7%9A%84%E5%92%8C%20str2int/" class="article-date">
+  <time datetime="2020-01-31T10:39:19.599Z" itemprop="datePublished">2020-01-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      数字子串的和 str2int
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://img-blog.csdnimg.cn/20200126165835643.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><a href="https://www.luogu.com.cn/problem/UVA1673" target="_blank" rel="noopener">UVA1673</a><br>这道题可以用广义后缀自动机，不过陈锋老师给我们讲了一个巧妙地方法，使得这道题可以用普通的后缀自动机做。<br><strong>题目大意</strong>：<br>给出$N$个完全由数字组成的字符串。计算将这个$N$的字符串的所有子串转换为整数后先去重再求和的结果，输出其模2012的余数。也就是求其子串的所有本质不同的字符串的和。<br><strong>预处理</strong>：<br>首先，我们可以将$N$个字符串拼接起来，拼接的部位可以用一个特殊的分隔符隔开。比如这里我用 ==:==，因为$’:’-‘0’=10$。我们将拼接好的字符串记作$S$，这样问题就转换成求$S$中所有不含分隔符的本质不同的子串的和。对$S$建立后缀自动机。<br><strong>定义</strong>：<br>$Cnt[v]$为从$SAM$的初始状态到状态$v$中的所有不含分隔符以及前导0的数量（根据题意，前导0去掉后算一个。比如01和1算作同一个子串）。<br>$Sum[v]$为从初始状态到状态$v$的所有合法路径形成的数字之和。<br><strong>转移方程</strong>：</p>
+<p><script type="math/tex">Cnt[v]=\sum\limits_{u\in FatherOf(v)}{Cnt[u]}</script>即v由u转移而来。而关于合法转移，只要在转移时不向分隔符的方向走子串就不会出现分隔符；只要不再初始状态往0走，就不会出现前导0。</p>
+<p><script type="math/tex">Sum[v]=\sum\limits_{u\in FatherOf(v)}{Sum[u]*10+Cnt[u]*i}</script>即当前的状态和为上一状态十进制进一位加上当前选择的路径<em>对应的合法路径数量。<br><strong>转移方式</strong>：<br>怎样保证方程中的$u$在$v$之前就更新过了呢？不难发现，由于$v$都是由$u$向下走一步得来，因此有：$len(u)&lt;len(v)$因此我们将所有状态按$len$排个序，从小到大更新即可。本题中的$len$是连续且大量重复的，可以采用计数排序$O(N)$解决，不过快排也够了。<br><em>*AC代码</em></em>：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAXN = <span class="number">120000</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="built_in">string</span> S;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">SAM</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> size, last;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">		<span class="keyword">int</span> len = <span class="number">0</span>, link = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> next[<span class="number">11</span>];</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			len = link = <span class="number">0</span>;</span><br><span class="line">			<span class="built_in">memset</span>(next, <span class="number">0</span>, <span class="keyword">sizeof</span>(next));</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; node[MAXN * <span class="number">2</span>];</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">			node[i].clear();</span><br><span class="line">		&#125;</span><br><span class="line">		node[<span class="number">0</span>].link = <span class="number">-1</span>;</span><br><span class="line">		size = <span class="number">1</span>;</span><br><span class="line">		last = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">char</span> x)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> ch = x - <span class="string">'0'</span>;</span><br><span class="line">		<span class="keyword">int</span> cur = size++;</span><br><span class="line">		node[cur].len = node[last].len + <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">int</span> p = last;</span><br><span class="line">		<span class="keyword">while</span> (p != <span class="number">-1</span> &amp;&amp; !node[p].next[ch]) &#123;</span><br><span class="line">			node[p].next[ch] = cur;</span><br><span class="line">			p = node[p].link;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (p == <span class="number">-1</span>) &#123;</span><br><span class="line">			node[cur].link = <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">int</span> q = node[p].next[ch];</span><br><span class="line">			<span class="keyword">if</span> (node[p].len + <span class="number">1</span> == node[q].len) &#123;</span><br><span class="line">				node[cur].link = q;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">int</span> clone = size++;</span><br><span class="line">				node[clone] = node[q];</span><br><span class="line">				node[clone].len = node[p].len + <span class="number">1</span>;</span><br><span class="line">				<span class="keyword">while</span> (p != <span class="number">-1</span> &amp;&amp; node[p].next[ch] == q) &#123;</span><br><span class="line">					node[p].next[ch] = clone;</span><br><span class="line">					p = node[p].link;</span><br><span class="line">				&#125;</span><br><span class="line">				node[q].link = node[cur].link = clone;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		last = cur;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;sam;</span><br><span class="line"><span class="keyword">int</span> N, Size = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span></span><br><span class="line">Cnt[<span class="number">2</span> * MAXN],</span><br><span class="line">SUM[<span class="number">2</span> * MAXN],</span><br><span class="line">Order[<span class="number">2</span> * MAXN];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">Input</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;N) == EOF) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	S.clear();</span><br><span class="line">	<span class="keyword">while</span> (N--) &#123;</span><br><span class="line">		<span class="built_in">string</span> Temp;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; Temp;</span><br><span class="line">		S.insert(S.end(), Temp.begin(), Temp.end());</span><br><span class="line">		S.push_back(<span class="string">':'</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	sam.init();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; S.size(); ++i) &#123;</span><br><span class="line">		sam.insert(S[i]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">static</span> <span class="keyword">int</span> mod = <span class="number">2012</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">DP</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; sam.size; ++i) &#123;</span><br><span class="line">		Order[i] = i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//排序</span></span><br><span class="line">	sort(Order, Order + sam.size, [](<span class="keyword">const</span> <span class="keyword">int</span>&amp;Left,<span class="keyword">const</span> <span class="keyword">int</span>&amp;Right)-&gt;<span class="keyword">bool</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> sam.node[Left].len &lt; sam.node[Right].len;</span><br><span class="line">		&#125;</span><br><span class="line">	);</span><br><span class="line">	<span class="comment">//空串合法</span></span><br><span class="line">	Cnt[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span>&amp;&amp; Ans = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; sam.size; ++i) &#123;</span><br><span class="line">		<span class="keyword">const</span> <span class="keyword">int</span>&amp; u = Order[i];</span><br><span class="line">		<span class="comment">//如果j是初始状态，就不能往0走，否则就可以，这样就可以去除前导0</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = (u ? <span class="number">0</span> : <span class="number">1</span>); j &lt; <span class="number">10</span>; ++j) &#123;</span><br><span class="line">			<span class="keyword">const</span> <span class="keyword">int</span>&amp; v = sam.node[u].next[j];</span><br><span class="line">			<span class="keyword">if</span> (sam.node[v].len) &#123;</span><br><span class="line">				Cnt[v] += Cnt[u];</span><br><span class="line">				Cnt[v] %= mod;</span><br><span class="line">				SUM[v] += SUM[u] * <span class="number">10</span> + j * Cnt[u];</span><br><span class="line">				SUM[v] %= mod;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		Ans += SUM[u];</span><br><span class="line">		Ans %= mod;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> Ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (Input()) &#123;</span><br><span class="line">		<span class="built_in">memset</span>(Cnt, <span class="number">0x0</span>, <span class="keyword">sizeof</span>(Cnt));</span><br><span class="line">		<span class="built_in">memset</span>(SUM, <span class="number">0x0</span>, <span class="keyword">sizeof</span>(SUM));</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, DP());</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/31/%E6%95%B0%E5%AD%97%E5%AD%90%E4%B8%B2%E7%9A%84%E5%92%8C%20str2int/" data-id="ck621diqq0003toup1tmhchsv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/01/31/Substrings/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Substrings
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/01/31/Longest%20Common%20Substring%EF%BC%88%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Longest Common Substring（最长公共子串）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" rel="tag">后缀自动机</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" style="font-size: 10px;">后缀自动机</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/01/31/New%20Distinct%20Substrings/">New Distinct Substrings</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/Reincarnation/">Reincarnation</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/Substrings/">Substrings</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E6%95%B0%E5%AD%97%E5%AD%90%E4%B8%B2%E7%9A%84%E5%92%8C%20str2int/">数字子串的和 str2int</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/Longest%20Common%20Substring%EF%BC%88%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2%EF%BC%89/">Longest Common Substring（最长公共子串）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Awesome<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
