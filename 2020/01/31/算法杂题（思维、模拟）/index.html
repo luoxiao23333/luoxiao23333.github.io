@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>算法杂题（思维、模拟） | SCUGoodGuy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="题目链接@[toc] A - やめて嘘はあなたらしくないよ The $h$-index of an author is the largest $h$ where he has at least $h$ papers with citations not less than $h$. Bobo has published many papers. Given $a_0, a_1, a_2, \do">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法杂题（思维、模拟）">
+<meta property="og:url" content="http://yoursite.com/2020/01/31/%E7%AE%97%E6%B3%95%E6%9D%82%E9%A2%98%EF%BC%88%E6%80%9D%E7%BB%B4%E3%80%81%E6%A8%A1%E6%8B%9F%EF%BC%89/index.html">
+<meta property="og:site_name" content="SCUGoodGuy">
+<meta property="og:description" content="题目链接@[toc] A - やめて嘘はあなたらしくないよ The $h$-index of an author is the largest $h$ where he has at least $h$ papers with citations not less than $h$. Bobo has published many papers. Given $a_0, a_1, a_2, \do">
+<meta property="og:locale" content="zh_CH">
+<meta property="article:published_time" content="2020-01-31T11:25:58.577Z">
+<meta property="article:modified_time" content="2020-01-31T11:25:58.584Z">
+<meta property="article:author" content="Awesome">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="SCUGoodGuy" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SCUGoodGuy</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">蒟蒻的博客</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-算法杂题（思维、模拟）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/31/%E7%AE%97%E6%B3%95%E6%9D%82%E9%A2%98%EF%BC%88%E6%80%9D%E7%BB%B4%E3%80%81%E6%A8%A1%E6%8B%9F%EF%BC%89/" class="article-date">
+  <time datetime="2020-01-31T11:25:58.577Z" itemprop="datePublished">2020-01-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      算法杂题（思维、模拟）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://vjudge.net/contest/347861?tdsourcetag=s_pctim_aiomsg#overview" target="_blank" rel="noopener">题目链接</a><br>@[toc]</p>
+<h1 id="A-やめて嘘はあなたらしくないよ"><a href="#A-やめて嘘はあなたらしくないよ" class="headerlink" title="A - やめて嘘はあなたらしくないよ"></a>A - やめて嘘はあなたらしくないよ</h1><blockquote>
+<p>The $h$-index of an author is the largest $h$ where he has at least $h$ papers with citations not less than $h$.<br> Bobo has published many papers.<br> Given $a_0, a_1, a_2, \dots, a_{n}$ which means Bobo has published $a_i$ papers with citations exactly $i$, find the $h$-index of Bobo.<br> Input<br> The input consists of several test cases and is terminated by end-of-file.<br>The first line of each test case contains an integer $n$.<br>The second line contains $(n+1)$ integers $a_0, a_1, \dots, a_n$.<br>Output<br>For each test case, print an integer which denotes the result.<br> Constraint<br> $1 \leq n \leq 2 \cdot 10^5$<br> $0 \leq a_i \leq 10^9$<br> The sum of $n$ does not exceed $250,000$.<br>Sample Input1<br>1 2<br>2<br>1 2 3<br>3<br>0 0 0 0<br>Sample Output1<br>2<br>0</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a[<span class="number">1000005</span>];</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="keyword">while</span> (~<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n)) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n; ++i)<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;a[i]);</span><br><span class="line">		<span class="keyword">int</span> ans = <span class="number">0</span>;<span class="comment">//表示论文数</span></span><br><span class="line">		<span class="comment">//从后往前贪心</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = n; i &gt;= <span class="number">0</span>; --i) &#123;</span><br><span class="line">			ans += a[i];</span><br><span class="line">			<span class="comment">//如果不满足题目条件</span></span><br><span class="line">			<span class="keyword">if</span> (i &lt;= ans) &#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, i);</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="B-目を見てこれからのことを話そう"><a href="#B-目を見てこれからのことを話そう" class="headerlink" title="B - 目を見てこれからのことを話そう"></a>B - 目を見てこれからのことを話そう</h1><blockquote>
+<p>The $h$-index of an author is the largest $h$ where he has at least hh papers with citations not less than $h$.<br> Bobo has no papers and he is going to publish some subsequently.<br> If he works on a paper for xx hours, the paper will get $(a⋅x)$ citations, where $a$ is a known constant.<br> It’s clear that $x$ should be a positive integer.<br> There is also a trick — one can cite his own papers published earlier.<br> Given Bobo has $n$ working hours, find the maximum $h$-index of him.<br> Input<br> The input consists of several test cases and is terminated by end-of-file.<br> Each test case contains two integers $n$ and $a$.<br> Output<br> For each test case, print an integer which denotes the maximum $h$-index.<br>  Constraint<br>  $1\leq n\leq 10^9$<br> $0\leq a\leq n$<br>The number of test cases does not exceed $10^4$.<br>Sample Input<br>       3 0<br>3 1<br>1000000000 1000000000<br>    Sample Output<br>        1<br>2<br>1000000000<br>Hint<br>        For the first sample, Bobo can work $3$ papers for $1$ hour each.<br>With the trick mentioned, he will get papers with citations $2, 1, 0$. Thus, his $h$-index is $1$.<br>For the second sample, Bobo can work $2$ papers for $1$ and $2$ hours respectively. He will get papers with citations $1 + 1, 2 + 0$. Thus, his $h$-index is $2$。</p>
+</blockquote>
+<p>最优解是每个论文都花1小时。仔细想一想就出来了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n, a;</span><br><span class="line">	<span class="keyword">while</span> (~<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;n, &amp;a)) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, (n + a) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="F-my-wish-かなえたいのに"><a href="#F-my-wish-かなえたいのに" class="headerlink" title="F - my wish かなえたいのに"></a>F - my wish かなえたいのに</h1><blockquote>
+<p>Bobo has $n$ tuples $(a_1,b_1,c_1),(a_2,b_2,c_2)\cdots ,(a_n,b_n,c_n)$.<br> He would like to find the lexicographically smallest permutation $p_1,p_2,\cdots ,p_n$<br>  of $1,2,\cdots ,n$.<br>such that for $i∈\{2,3,…,n\}$<br>it holds that   </p>
+<script type="math/tex; mode=display">\frac{a_{p_{i-1}}+b_{p_{i-1}}}{a_{p_{i-1}}+b_{p_{i-1}}+c_{p_{i-1}}} \leq \frac{a_{p_{i}}+b_{p_{i}}}{a_{p_{i}}+b_{p_{i}}+c_{p_{i}}}</script><p>Input<br>The input consists of several test cases and is terminated by end-of-file.  The first line of each test case contains an integer $n$.<br> The $i_{th}$ of the following nn lines contains 3 integers $a_i, b_i$ and $c_i$.<br>  Output<br>  For each test case, print nn integers $p_1,p_2,\cdots ,p_n$ seperated by spaces.  DO NOT print trailing spaces.<br>   Constraint<br>    $1\leq n\leq 10^3$<br>$1≤a_i,b_i,c_i≤2×10^9$<br>The sum of nn does not exceed 10^4<br> Sample Input<br> 2<br>1 1 1<br>1 1 2<br>2<br>1 1 2<br>1 1 1<br>3<br>1 3 1<br>2 2 1<br>3 1 1<br>Sample Output<br>2 1<br>1 2<br>1 2 3</p>
+</blockquote>
+<p>除法化乘法避免精度损失，在优化一下乘法（卡long long上限）。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> a, b, c;</span><br><span class="line">	<span class="keyword">int</span> node;</span><br><span class="line">&#125;;</span><br><span class="line">Node Data[<span class="number">1001</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="keyword">while</span> (~<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n)) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%lld%lld%lld"</span>, &amp;Data[i].a, &amp;Data[i].b, &amp;Data[i].c);</span><br><span class="line">			Data[i].node = i;</span><br><span class="line">		&#125;</span><br><span class="line">		sort(Data + <span class="number">1</span>, Data + n + <span class="number">1</span>, [](Node&amp;Left, Node&amp;Right) &#123;</span><br><span class="line">			<span class="keyword">long</span> <span class="keyword">long</span>&amp;&amp;left = (Left.a + Left.b)*(Right.c),</span><br><span class="line">				&amp;&amp;right = (Left.c)*(Right.a + Right.b);</span><br><span class="line">			<span class="keyword">return</span> (left == right ? Left.node &lt; Right.node:left &lt; right);</span><br><span class="line">			&#125;);</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%lld "</span>, Data[i].node);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%lld"</span>, Data[n].node);</span><br><span class="line">		<span class="built_in">putchar</span>(<span class="string">'\n'</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="G-すべては-God-knows…"><a href="#G-すべては-God-knows…" class="headerlink" title="G - すべては God knows…"></a>G - すべては God knows…</h1><blockquote>
+<p>Bobo has a string S=s1s2…sn consists of letter <code>a</code>, <code>b</code> and <code>c</code>.<br> He can transform the string by inserting or deleting substrings <code>aa</code>, <code>bb</code> and <code>abab</code>.<br> Formally, A=u∘w∘v (<code>`∘&#39;&#39; denotes string concatenation) can be transformed into A′=u∘v and vice versa where u, v are (possibly empty) strings and w∈{</code>aa<code>,</code>bb<code>,</code>abab<code>}. 
+ Given the target string $T=t_1t_2\cdots t_m$, determine if Bobo can transform the string S into T. 
+  Input
+      The input consists of several test cases and is terminated by end-of-file. 
+The first line of each test case contains a string $s_1s_2\cdots s_n$. 
+The second line contains a string $t_1t_2\cdots t_m$. 
+Output
+        For each test case, print</code>Yes<code>if Bobo can. Print</code>No<code>otherwise. 
+ Constraint 
+ $1≤n,m≤10^4$ 
+ $s_1,s_2,\cdots ,s_n,t_1,t_2,\cdots ,t_m∈\{a,b,c\}$ 
+ The sum of n and m does not exceed 250,000. 
+ Sample Input
+        ab
+ba
+ac
+ca
+a
+ab
+   Sample Output
+        Yes
+No
+No
+Hint
+        For the first sample, Bobo can transform as</code>ab =&gt; aababb =&gt; babb =&gt; ba`.</p>
+</blockquote>
+<p>根据提示，<strong>ab</strong>可以转为<strong>ba</strong>，<strong>ba</strong>同理。且可以增加删除<strong>aa</strong>或<strong>bb</strong>，那么，在没有<strong>c</strong>的字符串中，只要统计两个字符串中<strong>a</strong>和<strong>b</strong>个数是否同奇同偶即可。而对于<strong>c</strong>，可以看作<strong>c</strong>将字符串分割成了若干子串。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> scanf scanf_s</span></span><br><span class="line"><span class="keyword">int</span> ans1[<span class="number">10001</span>], ans2[<span class="number">10001</span>];</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;<span class="built_in">string</span> a, b;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; a &gt;&gt; b) &#123;</span><br><span class="line">		<span class="keyword">int</span> t = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> ct = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.size(); ++i) &#123;</span><br><span class="line">			<span class="keyword">if</span> (a[i] == <span class="string">'c'</span>) &#123;</span><br><span class="line">				ans1[ct++] = t;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> &#123;</span><br><span class="line">				t ^= a[i];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		ans1[ct++] = t;</span><br><span class="line">		<span class="keyword">int</span> s = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> st = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;b.size(); ++i) &#123;</span><br><span class="line">			<span class="keyword">if</span> (b[i] == <span class="string">'c'</span>) &#123;</span><br><span class="line">				ans2[st++] = s;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> &#123;</span><br><span class="line">				s ^= b[i];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		ans2[st++] = s;</span><br><span class="line">		<span class="keyword">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">if</span> (st == ct) &#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; st; ++i) &#123;</span><br><span class="line">				<span class="keyword">if</span> (ans1[i] != ans2[i]) &#123;</span><br><span class="line">					<span class="built_in">puts</span>(<span class="string">"No"</span>);</span><br><span class="line">					flag = <span class="literal">true</span>;</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (!flag) &#123;</span><br><span class="line">				<span class="built_in">puts</span>(<span class="string">"Yes"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="built_in">puts</span>(<span class="string">"No"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="K-傷跡なぞる"><a href="#K-傷跡なぞる" class="headerlink" title="K - 傷跡なぞる"></a>K - 傷跡なぞる</h1><blockquote>
+<p>Given $a,b,c,d$ find out the number of pairs of integers $(x,y)$ where $a≤x≤b,c≤y≤d$ and $x*y$ is a multiple of 2018.<br> Input<br>        The input consists of several test cases and is terminated by end-of-file.<br>        Each test case contains four integers $a,b,c,d$.<br>         Output<br>        For each test case, print an integer which denotes the result.<br> Constraint<br>$1≤a≤b≤10^9,1≤c≤d≤10^9$<br> The number of tests cases does not exceed $10^4$.<br> Sample Input<br>        1 2 1 2018<br>1 2018 1 2018<br>1 1000000000 1 1000000000<br>   Sample Output<br>        3<br>6051<br>1485883320325200</p>
+</blockquote>
+<p>2018的公约数只有1*2018以及2*1009这两对，根据容斥定理很容易求出结果。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> a, b, c, d;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (~<span class="built_in">scanf</span>(<span class="string">"%lld%lld%lld%lld"</span>, &amp;a, &amp;b, &amp;c, &amp;d)) &#123;</span><br><span class="line">		<span class="keyword">long</span> <span class="keyword">long</span> left[<span class="number">4</span>], right[<span class="number">4</span>];</span><br><span class="line"></span><br><span class="line">		<span class="keyword">auto</span> fuck = [](<span class="keyword">long</span> <span class="keyword">long</span> Array[<span class="number">4</span>],<span class="keyword">long</span> <span class="keyword">long</span> &amp;left,<span class="keyword">long</span> <span class="keyword">long</span> &amp;right)-&gt;<span class="keyword">void</span> &#123;</span><br><span class="line">			Array[<span class="number">0</span>] = right - left + <span class="number">1</span>;</span><br><span class="line">			Array[<span class="number">1</span>] = right / <span class="number">2</span> - (left - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">			Array[<span class="number">2</span>] = right / <span class="number">1009</span> - (left - <span class="number">1</span>) / <span class="number">1009</span>;</span><br><span class="line">			Array[<span class="number">3</span>] = right / <span class="number">2018</span> - (left - <span class="number">1</span>) / <span class="number">2018</span>;</span><br><span class="line">			Array[<span class="number">2</span>] -= Array[<span class="number">3</span>];</span><br><span class="line">			Array[<span class="number">1</span>] -= Array[<span class="number">3</span>];</span><br><span class="line">			Array[<span class="number">0</span>] -= Array[<span class="number">3</span>] + Array[<span class="number">2</span>] + Array[<span class="number">1</span>];</span><br><span class="line">		&#125;;</span><br><span class="line"></span><br><span class="line">		fuck(left, a, b);</span><br><span class="line">		fuck(right, c, d);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">const</span> <span class="keyword">long</span> <span class="keyword">long</span>&amp;&amp;Ans =</span><br><span class="line">			left[<span class="number">0</span>] * right[<span class="number">3</span>] +</span><br><span class="line">			left[<span class="number">1</span>] * (right[<span class="number">2</span>] + right[<span class="number">3</span>]) +</span><br><span class="line">			left[<span class="number">2</span>] * (right[<span class="number">1</span>] + right[<span class="number">3</span>]) +</span><br><span class="line">			left[<span class="number">3</span>] * (right[<span class="number">0</span>] + right[<span class="number">1</span>] + right[<span class="number">2</span>] + right[<span class="number">3</span>]);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, Ans);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/31/%E7%AE%97%E6%B3%95%E6%9D%82%E9%A2%98%EF%BC%88%E6%80%9D%E7%BB%B4%E3%80%81%E6%A8%A1%E6%8B%9F%EF%BC%89/" data-id="ck62371ua001bk0upg3xs2qhl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/01/31/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%85%A5%E9%97%A8%E4%BE%8B%E9%A2%98/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          动态规划入门例题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/01/31/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%A4%8D%E4%B9%A0%E6%8F%90%E7%BA%B2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">操作系统复习提纲</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" rel="tag">后缀自动机</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" style="font-size: 10px;">后缀自动机</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/">学习笔记——拓扑排序</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/">学习笔记——最小生成树</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%B9%B6%E6%9F%A5%E9%9B%86%EF%BC%88%E4%B8%8A%EF%BC%89%E6%A8%A1%E6%9D%BF%E5%92%8C%E7%A7%8D%E7%B1%BB%E5%B9%B6%E6%9F%A5%E9%9B%86/">学习笔记——并查集（上）模板和种类并查集</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%B9%B6%E6%9F%A5%E9%9B%86%EF%BC%88%E4%B8%8B%EF%BC%89%E5%B8%A6%E6%9D%83%E5%B9%B6%E6%9F%A5%E9%9B%86/">学习笔记——并查集（下）带权并查集</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%8F%8C%E5%90%91BFS/">学习笔记——双向BFS</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Awesome<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

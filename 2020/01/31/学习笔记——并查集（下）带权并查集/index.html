@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>学习笔记——并查集（下）带权并查集 | SCUGoodGuy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="@[toc] 简介带权并查集是一种带有某种信息的并查集，即每个子节点都储存其自身与跟节点的关系，如路径长度等。定义一个带权并查集数组： 1234struct&amp;#123;	int p;&#x2F;&#x2F;父节点编号	int data;&#x2F;&#x2F;与根节点的关系&amp;#125;f[MAX]; 这里关键的问题时带权并查集在合并和路径压缩时怎么做到状态更新呢？ 合并首先合并，除了普通的合并，只要加一条信息更新就行了（更新最终根节点）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习笔记——并查集（下）带权并查集">
+<meta property="og:url" content="http://yoursite.com/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%B9%B6%E6%9F%A5%E9%9B%86%EF%BC%88%E4%B8%8B%EF%BC%89%E5%B8%A6%E6%9D%83%E5%B9%B6%E6%9F%A5%E9%9B%86/index.html">
+<meta property="og:site_name" content="SCUGoodGuy">
+<meta property="og:description" content="@[toc] 简介带权并查集是一种带有某种信息的并查集，即每个子节点都储存其自身与跟节点的关系，如路径长度等。定义一个带权并查集数组： 1234struct&amp;#123;	int p;&#x2F;&#x2F;父节点编号	int data;&#x2F;&#x2F;与根节点的关系&amp;#125;f[MAX]; 这里关键的问题时带权并查集在合并和路径压缩时怎么做到状态更新呢？ 合并首先合并，除了普通的合并，只要加一条信息更新就行了（更新最终根节点）">
+<meta property="og:locale" content="zh_CH">
+<meta property="article:published_time" content="2020-01-31T11:28:25.004Z">
+<meta property="article:modified_time" content="2020-01-31T11:28:25.010Z">
+<meta property="article:author" content="Awesome">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="SCUGoodGuy" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SCUGoodGuy</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">蒟蒻的博客</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-学习笔记——并查集（下）带权并查集" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%B9%B6%E6%9F%A5%E9%9B%86%EF%BC%88%E4%B8%8B%EF%BC%89%E5%B8%A6%E6%9D%83%E5%B9%B6%E6%9F%A5%E9%9B%86/" class="article-date">
+  <time datetime="2020-01-31T11:28:25.004Z" itemprop="datePublished">2020-01-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      学习笔记——并查集（下）带权并查集
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>@[toc]</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>带权并查集是一种带有某种信息的并查集，即每个子节点都储存其自身与跟节点的关系，如路径长度等。定义一个带权并查集数组：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> p;<span class="comment">//父节点编号</span></span><br><span class="line">	<span class="keyword">int</span> data;<span class="comment">//与根节点的关系</span></span><br><span class="line">&#125;f[MAX];</span><br></pre></td></tr></table></figure>
+<p>这里关键的问题时带权并查集在合并和路径压缩时怎么做到状态更新呢？</p>
+<h3 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h3><p>首先合并，除了普通的合并，只要加一条信息更新就行了（更新最终根节点）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> f[i].p = j;</span><br><span class="line"> update(f[j].data);<span class="comment">//j成为了根，更新j</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="路径压缩"><a href="#路径压缩" class="headerlink" title="路径压缩"></a>路径压缩</h3><p>关于路径压缩，先看代码</p>
+<h4 id="更新方式1"><a href="#更新方式1" class="headerlink" title="更新方式1"></a>更新方式1</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> <span class="keyword">if</span> (f[x].p == x)</span><br><span class="line">  <span class="keyword">return</span> x;</span><br><span class="line"> f[x].p = find(f[x].p);</span><br><span class="line"> f[x].data = f[f[x].p].data;</span><br><span class="line"> <span class="keyword">return</span> f[x].p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>和普通的路径压缩相比，只是多了一行代码。因为第5行代码执行后，f[x].p已经是根节点，所以这样更新使得子节点的data直接是根节点的data了.</p>
+<h4 id="更新方式2"><a href="#更新方式2" class="headerlink" title="更新方式2"></a>更新方式2</h4><p>可以在先用ft记录自己的父节点，然后利用递归栈先进后出的性质自根节点向叶节点更新数据，比如代码中的data可以表示子节点到根节点的距离，然后自根向叶逐层更新。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> <span class="keyword">if</span> (f[x].p == x)</span><br><span class="line">  <span class="keyword">return</span> x;</span><br><span class="line"> <span class="keyword">int</span> ft = f[x].p;</span><br><span class="line"> f[x].p = find(f[x].p);<span class="comment">//函数一直递归调用到根节点</span></span><br><span class="line"> f[x].data = f[ft].data + <span class="number">1</span>;<span class="comment">/*这句话从根节点的上一节点</span></span><br><span class="line"><span class="comment"> 开始递归执行到叶节点*/</span></span><br><span class="line"> <span class="keyword">return</span> f[x].p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Q1银河英雄传说"><a href="#Q1银河英雄传说" class="headerlink" title="Q1银河英雄传说"></a>Q1银河英雄传说</h2><p>原题传送门-&gt;<a href="https://www.luogu.org/problemnew/show/P1196" target="_blank" rel="noopener">洛谷P1196</a><br>这道题除了普通的并查集操作，还需要记录根节点到叶节点的距离来计算两个飞船间的飞船数，即答案就是飞船i到根节点距离和飞船j到根节点距离的差的绝对值-1，而且根节点要记录该集合的飞船数以此来在合并操作时更新子节点到根节点的距离。具体实现看丑丑的代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;numeric&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> max(a,b) ((a)&gt;(b)?(a):(b))</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> p, len, all;<span class="comment">/*分别表示父节点，该点到根节点</span></span><br><span class="line"><span class="comment">    距离以及若该点是根节点，则保存正确的该集合飞船数*/</span></span><br><span class="line">&#125;f[<span class="number">30001</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (f[x].p == x)</span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    <span class="keyword">int</span> ft = f[x].p;<span class="comment">//记录本层递归栈的父节点</span></span><br><span class="line">    f[x].p = find(f[x].p);<span class="comment">//路径压缩，父节更新成子节点</span></span><br><span class="line">    f[x].len += f[ft].len;<span class="comment">/*如果合并操作前该节点是合并函数中i的子</span></span><br><span class="line"><span class="comment">    节点，则路径压缩时必定经过i，所以要从i开始跟新到本层节点，所以有</span></span><br><span class="line"><span class="comment">    了合并函数中第二句的操作，以此在路径压缩时消除合并操作对i集合中节</span></span><br><span class="line"><span class="comment">    点的len成员的影响。*/</span></span><br><span class="line">    f[x].all = f[f[x].p].all;</span><br><span class="line">    <span class="keyword">return</span> f[x].p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    f[i].p = j;<span class="comment">//合并时i在j后面，j成为根节点</span></span><br><span class="line">    f[i].len += f[j].all;<span class="comment">//更新i到j的距离</span></span><br><span class="line">    f[j].all += f[i].all;<span class="comment">//更新j集合的规模</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> t;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">30000</span>; i++)<span class="comment">//初始化</span></span><br><span class="line">    &#123;</span><br><span class="line">        f[i].p = i;</span><br><span class="line">        f[i].all = <span class="number">1</span>;</span><br><span class="line">        f[i].len = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (t--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">char</span> op; <span class="keyword">int</span> i, j;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; op &gt;&gt; i &gt;&gt; j;</span><br><span class="line">        <span class="keyword">int</span> ip = find(i), jp = find(j);<span class="comment">/*每次循环都会先路径压缩，</span></span><br><span class="line"><span class="comment">        而每次合并到这一步才是完整的*/</span></span><br><span class="line">        <span class="keyword">if</span> (op == <span class="string">'M'</span>)</span><br><span class="line">            merge(ip, jp);<span class="comment">/*这里合并后len的更新在下一次循环中的路</span></span><br><span class="line"><span class="comment">            径压缩*/</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (ip != jp)</span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; <span class="number">-1</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; <span class="built_in">labs</span>(f[i].len - f[j].len) - <span class="number">1</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">                <span class="comment">//记得减一。模拟一下就知道了</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%B9%B6%E6%9F%A5%E9%9B%86%EF%BC%88%E4%B8%8B%EF%BC%89%E5%B8%A6%E6%9D%83%E5%B9%B6%E6%9F%A5%E9%9B%86/" data-id="ck62371u2000yk0up6ce355ve" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%B9%B6%E6%9F%A5%E9%9B%86%EF%BC%88%E4%B8%8A%EF%BC%89%E6%A8%A1%E6%9D%BF%E5%92%8C%E7%A7%8D%E7%B1%BB%E5%B9%B6%E6%9F%A5%E9%9B%86/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          学习笔记——并查集（上）模板和种类并查集
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%8F%8C%E5%90%91BFS/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">学习笔记——双向BFS</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" rel="tag">后缀自动机</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" style="font-size: 10px;">后缀自动机</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/">学习笔记——拓扑排序</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/">学习笔记——最小生成树</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%B9%B6%E6%9F%A5%E9%9B%86%EF%BC%88%E4%B8%8A%EF%BC%89%E6%A8%A1%E6%9D%BF%E5%92%8C%E7%A7%8D%E7%B1%BB%E5%B9%B6%E6%9F%A5%E9%9B%86/">学习笔记——并查集（上）模板和种类并查集</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%B9%B6%E6%9F%A5%E9%9B%86%EF%BC%88%E4%B8%8B%EF%BC%89%E5%B8%A6%E6%9D%83%E5%B9%B6%E6%9F%A5%E9%9B%86/">学习笔记——并查集（下）带权并查集</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%8F%8C%E5%90%91BFS/">学习笔记——双向BFS</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Awesome<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>校长的烦恼 Headmaster&#39;s Headache | SCUGoodGuy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="UVA10817定义：$s_0$为没人教的科目的集合，$s_1$为恰好有一人教的科目的集合，$s_2$为至少有两人教的科目的集合。则定义$dp[i][s_1][s_2]$为考虑前i名教师时科目情况为相应科目情况为$s_1,s_2$时的最小花费。$AllSet$为全集。这里的集合采用二进制表示法。$i$的编号从$0\sim M+N-1$，即$0\sim M-1$为在职教师，$M\sim M+N-1$">
+<meta property="og:type" content="article">
+<meta property="og:title" content="校长的烦恼 Headmaster&#39;s Headache">
+<meta property="og:url" content="http://yoursite.com/2020/01/31/%E6%A0%A1%E9%95%BF%E7%9A%84%E7%83%A6%E6%81%BC%20Headmaster's%20Headache/index.html">
+<meta property="og:site_name" content="SCUGoodGuy">
+<meta property="og:description" content="UVA10817定义：$s_0$为没人教的科目的集合，$s_1$为恰好有一人教的科目的集合，$s_2$为至少有两人教的科目的集合。则定义$dp[i][s_1][s_2]$为考虑前i名教师时科目情况为相应科目情况为$s_1,s_2$时的最小花费。$AllSet$为全集。这里的集合采用二进制表示法。$i$的编号从$0\sim M+N-1$，即$0\sim M-1$为在职教师，$M\sim M+N-1$">
+<meta property="og:locale" content="zh_CH">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200120012557427.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2020-01-31T11:21:38.952Z">
+<meta property="article:modified_time" content="2020-01-31T11:21:38.958Z">
+<meta property="article:author" content="Awesome">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200120012557427.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70">
+  
+    <link rel="alternate" href="/atom.xml" title="SCUGoodGuy" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SCUGoodGuy</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">蒟蒻的博客</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-校长的烦恼 Headmaster&#39;s Headache" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/31/%E6%A0%A1%E9%95%BF%E7%9A%84%E7%83%A6%E6%81%BC%20Headmaster's%20Headache/" class="article-date">
+  <time datetime="2020-01-31T11:21:38.952Z" itemprop="datePublished">2020-01-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      校长的烦恼 Headmaster&#39;s Headache
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://img-blog.csdnimg.cn/20200120012557427.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><a href="https://www.luogu.com.cn/problem/UVA10817" target="_blank" rel="noopener">UVA10817</a><br><strong>定义</strong>：$s_0$为没人教的科目的集合，$s_1$为恰好有一人教的科目的集合，$s_2$为至少有两人教的科目的集合。则定义$dp[i][s_1][s_2]$为考虑前i名教师时科目情况为相应科目情况为$s_1,s_2$时的最小花费。$AllSet$为全集。这里的集合采用二进制表示法。$i$的编号从$0\sim M+N-1$，即$0\sim M-1$为在职教师，$M\sim M+N-1$为应聘教师。<br><strong>初始化</strong>：</p>
+<script type="math/tex; mode=display">dp=-1$$表示未计算过
+**转移方程**：
+1. 枚举应聘者时
+$$dp[i][s_1][s_2]=min(\\
+dp[i+1][s_1][s_2]不聘用第i名教师，\\
+dp[i+1][s_1'][s_2']+teachers[i].Cost聘用第i名教师\\)</script><p>其中，$s_1’,s_2’$为聘用此人后的新$s_1,s_2$</p>
+<ol>
+<li>枚举在职教师时,只能聘用<script type="math/tex; mode=display">dp[i][s_1][s_2]=dp[i+1][s_1'][s_2']+teachers[i].Cost</script></li>
+</ol>
+<p><strong>边界条件</strong>：<br>当$i==M+N$时，即$dp[M+N]$要赋值给$dp[M+N-1]$，此时为考虑所有教师后，因此若此时$s_2==AllSet$，则说明此时所有课都由至少两名老师，无需再额外聘用老师。否则返回$inf$，以便做$min$运算。注意：实现中由于递归（先进后出）的性质，实际上枚举顺序是从$M+N-1$到0。<br><strong>AC代码</strong>：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> S, M, N;</span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">static</span> <span class="keyword">int</span> inf = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"><span class="keyword">int</span> dp[<span class="number">130</span>][<span class="number">1</span> &lt;&lt; <span class="number">8</span>][<span class="number">1</span> &lt;&lt; <span class="number">8</span>];</span><br><span class="line"><span class="keyword">int</span> AllSet;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Employee</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> Cost, CourseSet;</span><br><span class="line">&#125;teachers[<span class="number">130</span>];</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">Input</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;S);</span><br><span class="line">	<span class="keyword">if</span> (!S) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;M, &amp;N);</span><br><span class="line">	AllSet = (<span class="number">1</span> &lt;&lt; S) - <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; M + N; ++i) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;teachers[i].Cost);</span><br><span class="line">		teachers[i].CourseSet = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">while</span> (getchar() != <span class="string">'\n'</span>) &#123;</span><br><span class="line">			<span class="keyword">int</span> Course;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;Course);</span><br><span class="line">			teachers[i].CourseSet |= (<span class="number">1</span> &lt;&lt; Course - <span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">DP</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> s0, <span class="keyword">int</span> s1, <span class="keyword">int</span> s2)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (i == M + N) &#123;</span><br><span class="line">		<span class="keyword">return</span> s2 == AllSet ? <span class="number">0</span> : inf;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span>&amp; ans = dp[i][s1][s2];</span><br><span class="line">	<span class="comment">//ans!=-1，即此时改dp元素已经被枚举到</span></span><br><span class="line">	<span class="keyword">if</span> (~ans) &#123;</span><br><span class="line">		<span class="keyword">return</span> ans;</span><br><span class="line">	&#125;</span><br><span class="line">	ans = inf;</span><br><span class="line">	<span class="comment">//如果枚举的是应聘者，要考虑不聘用他的情况</span></span><br><span class="line">	<span class="keyword">if</span> (i &gt;= M) &#123;</span><br><span class="line">		ans = DP(i + <span class="number">1</span>, s0, s1, s2);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span></span><br><span class="line">		<span class="comment">//m0=没有老师教的科目集合与当前老师教的科目集合的交集</span></span><br><span class="line">		&amp;&amp;m0 = teachers[i].CourseSet &amp; s0,</span><br><span class="line">		<span class="comment">//m1=只有一个老师教的科目的集合与当前老师教科目集合的并集</span></span><br><span class="line">		&amp;&amp;m1 = teachers[i].CourseSet &amp; s1;</span><br><span class="line">	<span class="comment">//相当于s0-m0，即s0应当去掉当前老师能教的科目</span></span><br><span class="line">	s0 ^= m0;</span><br><span class="line">	<span class="comment">//s1应去掉s1中与当前老师教的科目重合的科目（此时多了一个老师教，这些科目移到s2），并且加上原来没有老师教的但当前老师能教的科目</span></span><br><span class="line">	s1 = (s1 ^ m1) | m0;</span><br><span class="line">	<span class="comment">//s2加上原来就有一个老师教现在当前老师又能教的科目</span></span><br><span class="line">	s2 |= m1;</span><br><span class="line">	ans = min(ans, teachers[i].Cost + DP(i + <span class="number">1</span>, s0, s1, s2));</span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (Input()) &#123;</span><br><span class="line">		<span class="built_in">memset</span>(dp, <span class="number">-1</span>, <span class="keyword">sizeof</span>(dp));</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, DP(<span class="number">0</span>, AllSet, <span class="number">0</span>, <span class="number">0</span>));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/31/%E6%A0%A1%E9%95%BF%E7%9A%84%E7%83%A6%E6%81%BC%20Headmaster's%20Headache/" data-id="ck62371u80016k0updjdmds9a" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/01/31/%E5%AE%8C%E7%BE%8E%E7%9A%84%E6%9C%8D%E5%8A%A1%20Perfect%20Service/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          完美的服务 Perfect Service
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/01/31/%E5%85%8D%E8%B4%B9%E7%B3%96%E6%9E%9C%20Free%20Candies/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">免费糖果 Free Candies</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" rel="tag">后缀自动机</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" style="font-size: 10px;">后缀自动机</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/">学习笔记——拓扑排序</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/">学习笔记——最小生成树</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%B9%B6%E6%9F%A5%E9%9B%86%EF%BC%88%E4%B8%8A%EF%BC%89%E6%A8%A1%E6%9D%BF%E5%92%8C%E7%A7%8D%E7%B1%BB%E5%B9%B6%E6%9F%A5%E9%9B%86/">学习笔记——并查集（上）模板和种类并查集</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%B9%B6%E6%9F%A5%E9%9B%86%EF%BC%88%E4%B8%8B%EF%BC%89%E5%B8%A6%E6%9D%83%E5%B9%B6%E6%9F%A5%E9%9B%86/">学习笔记——并查集（下）带权并查集</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%8F%8C%E5%90%91BFS/">学习笔记——双向BFS</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Awesome<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

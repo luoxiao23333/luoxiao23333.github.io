@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>学习笔记——KMP字符串匹配算法 | SCUGoodGuy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="@[toc] 简介KMP算法是一种字符串匹配算法，它利用了模式串（被匹配串）自身的相关信息来减少匹配次数。本文假设文本串（待匹配串）为T，模式串（被匹配串）为P。而T，P的长度分别为TLen，PLen。记T~i~为T的前i个字符构成的子串，T~-i~为T后i个字符构成的子串，P同理。 求辅助数组在实现这个算法前，我们需要先求一个特殊的数组，暂且记为Pre[PLen+1]。这个数组的含义为Pre[i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习笔记——KMP字符串匹配算法">
+<meta property="og:url" content="http://yoursite.com/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94KMP%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="SCUGoodGuy">
+<meta property="og:description" content="@[toc] 简介KMP算法是一种字符串匹配算法，它利用了模式串（被匹配串）自身的相关信息来减少匹配次数。本文假设文本串（待匹配串）为T，模式串（被匹配串）为P。而T，P的长度分别为TLen，PLen。记T~i~为T的前i个字符构成的子串，T~-i~为T后i个字符构成的子串，P同理。 求辅助数组在实现这个算法前，我们需要先求一个特殊的数组，暂且记为Pre[PLen+1]。这个数组的含义为Pre[i">
+<meta property="og:locale" content="zh_CH">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190503233148457.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190504002250220.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190504003707340.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2020-01-31T11:26:50.310Z">
+<meta property="article:modified_time" content="2020-01-31T11:26:50.317Z">
+<meta property="article:author" content="Awesome">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190503233148457.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70">
+  
+    <link rel="alternate" href="/atom.xml" title="SCUGoodGuy" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SCUGoodGuy</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">蒟蒻的博客</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-学习笔记——KMP字符串匹配算法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94KMP%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%E7%AE%97%E6%B3%95/" class="article-date">
+  <time datetime="2020-01-31T11:26:50.310Z" itemprop="datePublished">2020-01-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      学习笔记——KMP字符串匹配算法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>@[toc]</p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>KMP算法是一种字符串匹配算法，它利用了模式串（被匹配串）自身的相关信息来减少匹配次数。本文假设文本串（待匹配串）为T，模式串（被匹配串）为P。而T，P的长度分别为TLen，PLen。记T~i~为T的前i个字符构成的子串，T~-i~为T后i个字符构成的子串，P同理。</p>
+<h2 id="求辅助数组"><a href="#求辅助数组" class="headerlink" title="求辅助数组"></a>求辅助数组</h2><p>在实现这个算法前，我们需要先求一个特殊的数组，暂且记为Pre[PLen+1]。这个数组的含义为Pre[i]=max(j),其中记H=P~i~，其中j满足(j&lt;=i&amp;&amp;H~j~=H~-j~)，即P~i~的最长的（前缀等于后缀）的长度。我们暂且把为什么要这个放在一边，先看看怎么求。首先，先上代码。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ty&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> KMP&lt;Ty&gt;::ComputePrefixFunction() &#123;</span><br><span class="line"> Pre = <span class="keyword">new</span> <span class="keyword">int</span>[PLen + <span class="number">1</span>];</span><br><span class="line"> Pre[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line"> <span class="keyword">int</span> k = <span class="number">0</span>;<span class="comment">//k表示当前的前后缀匹配长度</span></span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> q = <span class="number">2</span>; q &lt;= PLen; q++) &#123;<span class="comment">//q表示处理到第几位</span></span><br><span class="line">  <span class="keyword">while</span> (k &gt; <span class="number">0</span> &amp;&amp; P[k + <span class="number">1</span>] != P[q]) &#123;</span><br><span class="line">   k = Pre[k];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (P[k + <span class="number">1</span>] == P[q]) &#123;</span><br><span class="line">   k++;</span><br><span class="line">  &#125;</span><br><span class="line">  Pre[q] = k;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20190503233148457.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>代码中的表示当前匹配成功了看个长度，我们先看代码中的while循环，此时已经匹配到了第q项，即对应上图中的的i项，其中前i-1项已经匹配完成，准备匹配第i项，那此时的max（j）怎么求呢？此时的k为上一项的max=（j），即i-1时的max（j），记为k~0~,那如果P[k~0~+1]==P[i],那第i项的max（j）等于第i-1项的max（j）+1，所以直接退出循环，然后触发if，Pre[i]=k~0~++。如果P[k~0~+1]!=P[i]，那就直接找前k~0~项中最大的max(j)，记为k~1~，即k~1~=Pre[k~0~]，然后再判断P[k~1~+1]和P[i]是否相等，一直找到P[k~n~+1]=P[i]为止，或者是循环到Pre[1]，那此时k自然为0然后进入if判断，一直往复循环，最终更新完Pre数组为止。</p>
+<h3 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h3><p>这里时间复杂度的分析方法采用聚合分析的方法。首先，k初始化为0，不难发现，k的递增只能来源于for循环中的if语句，且假设每次都递增的话，k至多递增PLen-1次（for循环次数），而k的减少只能来源与while循环，所以while循环至多执行PLen-1次，所以时间复杂度为$O(PLen)$。</p>
+<h2 id="关于辅助数组的两道题"><a href="#关于辅助数组的两道题" class="headerlink" title="关于辅助数组的两道题"></a>关于辅助数组的两道题</h2><h3 id="ProblemD-Power-Strings"><a href="#ProblemD-Power-Strings" class="headerlink" title="ProblemD Power Strings"></a>ProblemD Power Strings</h3><p><a href="http://poj.org/problem?id=2406" target="_blank" rel="noopener">Poj2406</a></p>
+<blockquote>
+<p>假设s可以由t重复k次拼成，即s=tttt……tt，我们称为s=t^k^。先给定一个字符串s，求最大的n使得存在t满足s=t^n^。<br>Input<br>多组数据，每行一个字符串(仅包含可打印字符且长度不超过1000000)，以单独一行.作为终结标志<br>Output<br>每组数据一行答案<br>Sample Input<br>abcd<br>aaaa<br>ababab<br>.<br>Sample Output<br>1<br>4<br>3<br>Hint：This problem has huge input, use scanf instead of cin to avoid time limit exceed.</p>
+<p>定理：假设P的长度为PLen，则P存在循环子串，当且仅当，len可以被Plen - Pre[Plen]整除，最短循环子串为S[PLen - Pre[PLen]]<br>例子证明：<br>设P=q~1~q~2~q~3~q~4~q~5~q~6~q~7~q~8~，并设Pre[8] = 6，此时str = P[PLen - Pre[len]] = q~1~q~2~，由字符串辅助数组Pre的定义可知，q~1~q~2~q~3~q~4~q~5~q~6~ = q~3~q~4~q~5~q~6~q~7~q~8~，即有q~1~q~2~＝q~3~q~4~，q~3~q~4~＝q~5~q~6~，q~5~q~6~＝q~7~q~8~，即q~1~q~2~为循环子串，且易知为最短循环子串。由以上过程可知，若PLen可以被PLen - Pre[PLen]整除，P存在循环子串，否则不存在。<br>引用至(<a href="https://www.cnblogs.com/zyx1314/p/3615651.html）" target="_blank" rel="noopener">https://www.cnblogs.com/zyx1314/p/3615651.html）</a></p>
+</blockquote>
+<p>所以直接看最短循环字串长度能否被PLen整除即可。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ty&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> KMP&lt;Ty&gt;::ProblemD()&#123;</span><br><span class="line"> ComputePrefixFunction();</span><br><span class="line"> <span class="keyword">int</span> Len = PLen - Pre[PLen]; </span><br><span class="line"> <span class="keyword">if</span> (PLen%Len)</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="number">1</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"> <span class="keyword">else</span></span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; PLen / Len &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="ProblemE-Seek-the-Name-Seek-the-Fame"><a href="#ProblemE-Seek-the-Name-Seek-the-Fame" class="headerlink" title="ProblemE Seek the Name, Seek the Fame"></a>ProblemE Seek the Name, Seek the Fame</h3><p><a href="http://poj.org/problem?id=2752" target="_blank" rel="noopener">Poj2752</a></p>
+<blockquote>
+<p>给定一个字符串s，从小到大输出s中既是前缀又是后缀的子串的长度。即输出所有k满足s[0..k-1]=s[l-k,l-1] (l为s长度)<br>Input<br>多组数据，每组一行一个字符串(仅出现小写字母且长度不超过400000)<br>Output<br>对于每组数据。从小到大输出一行所有满足条件的k。<br>Sample Input<br>ababcababababcabab<br>aaaaa<br>Sample Output<br>2 4 9 18<br>1 2 3 4 5</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20190504002250220.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>设图中黑线为文本串，灰线为Pre[PLen]的情况，即原串的最长前后缀，符合题意，然后暗红串为Pre[Pre[PLen]]，根据Pre定义，前两条暗红线相同，因为灰串部分左右相同，所以第二条暗红线等于第三条，所以第一条等于第三条，所以暗红线符合题设，亮红线同理，就这样推到底就行了。注意最后输出本身长度。。。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ty&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> KMP&lt;Ty&gt;::ProblemE() &#123;</span><br><span class="line"> ComputePrefixFunction();</span><br><span class="line"> <span class="keyword">int</span> k = Pre[PLen];</span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;ve;</span><br><span class="line"> <span class="keyword">while</span> (k &gt; <span class="number">0</span>) &#123;</span><br><span class="line">   ve.push_back(k);</span><br><span class="line">  k = Pre[k];</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">//从小到大，所以要反向输出</span></span><br><span class="line"> <span class="keyword">for</span> (<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::reverse_iterator it = ve.rbegin(); it != ve.rend(); it++) &#123;</span><br><span class="line">   <span class="built_in">cout</span> &lt;&lt; *it &lt;&lt; <span class="string">' '</span>;</span><br><span class="line"> &#125;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; PLen &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="字符串匹配"><a href="#字符串匹配" class="headerlink" title="字符串匹配"></a>字符串匹配</h2><p>那么，获取了辅助数组后，我们怎么更高效的进行匹配呢？</p>
+<p><img src="https://img-blog.csdnimg.cn/20190504003707340.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="来自算法导论的某一页"></p>
+<p>此图来自算法导论的某一页233333.看图a中的，当前匹配项失配了，然后我们发现T中灰色部分的后三项aba在上一次匹配中已经确定和P灰色部分的后三项aba匹配，然后根据Pre数组的<br>定义，P的前三项等于后三项，所以已经此时匹配时已经确定了P的灰色前三项和T的灰色后三项匹配，无需重复匹配，并且Pre[当前位置]=3确定了而不是4确定了P偏移一格是无效的（图中的讲解要看看）换成代码就是<br>整个代码和ComputePrefixFunction()思想时一样的<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ty&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> KMP&lt;Ty&gt;::ProblemG() &#123;</span><br><span class="line"> ComputePrefixFunction();</span><br><span class="line"> <span class="keyword">int</span> q = <span class="number">0</span>;</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= TLen; i++) &#123;</span><br><span class="line">  <span class="keyword">while</span> (q &gt; <span class="number">0</span> &amp;&amp; P[q + <span class="number">1</span>] != T[i]) &#123;<span class="comment">//其实和求辅助数组时的while原理类似</span></span><br><span class="line">   q = Pre[q];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (P[q + <span class="number">1</span>] == T[i]) &#123;</span><br><span class="line">   q++;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (q == PLen) &#123;</span><br><span class="line">   <span class="built_in">cout</span> &lt;&lt; i - PLen + <span class="number">1</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   q = Pre[q];<span class="comment">//如果要找多个不直接return的话要加这一步</span></span><br><span class="line">   <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="built_in">cout</span> &lt;&lt; <span class="number">-1</span> &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//表示找不到</span></span><br><span class="line"> <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>然后有个模板<a href="http://acm.hdu.edu.cn/showproblem.php?pid=1711" target="_blank" rel="noopener">Hduoj1711</a></p>
+<h3 id="时间复杂度-1"><a href="#时间复杂度-1" class="headerlink" title="时间复杂度"></a>时间复杂度</h3><p>类似的思想，类似的聚合分析，看q的增减情况可知时间复杂度为$O(TLen)$</p>
+<h3 id="ProblemH-Censor"><a href="#ProblemH-Censor" class="headerlink" title="ProblemH Censor"></a>ProblemH Censor</h3><blockquote>
+<p>现在给定一个你很讨厌的字符串 A 和另外一个字符串 B，请删除在 B 中出现的所有 A。<br>请注意：有可能在删除一个 A 后导致新的 A 出现，此时请继续删除，直到没有 A。输入格式<br>输入为多组数据，请处理到 EOF。<br>对于每组数据：<br>第一行为你很讨厌的字符串 A，第二行为另外一个字符串 B，均仅包括小写字母。<br>保证 A串 和 B串 的长度不超过 5000000 且 A、B 均不为空串。输出格式<br>对于每组数据，输出一行，即完成删除后的字符串。样例输入<br>abc<br>aaabcbc<br>b<br>bbb<br>abc<br>ab<br>样例输出<br>a<br>&lt;/br&gt;<br>ab<br>样例解释<br>第一组数据的删除过程：<br>aaabcbc -&gt; aa[abc]bc -&gt; aabc -&gt; a[abc] -&gt; a<br>第二组数据的删除过程：<br>bbb -&gt; [b]bb -&gt; bb -&gt; [b]b -&gt; b -&gt; [b] -&gt;<br>第三组数据由于讨厌的字符串并没有出现，所以没有被删除任何一个部分。</p>
+</blockquote>
+<p>代码如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ty&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> KMP&lt;Ty&gt;::ProblemH() &#123;</span><br><span class="line"> ComputePrefixFunction();</span><br><span class="line"> <span class="keyword">int</span> cnt = <span class="number">1</span>;<span class="comment">//ans的坐标，初始化为1</span></span><br><span class="line"> <span class="keyword">char</span>*ans= <span class="keyword">new</span> <span class="keyword">char</span>[TLen + <span class="number">2</span>];<span class="comment">//记录答案</span></span><br><span class="line"> <span class="keyword">int</span>*Pos = <span class="keyword">new</span> <span class="keyword">int</span>[TLen + <span class="number">5</span>];<span class="comment">//记录当前位置匹配的长度</span></span><br><span class="line"> <span class="keyword">int</span> q = <span class="number">0</span>;</span><br><span class="line"> Pos[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= TLen; i++, cnt++) &#123;</span><br><span class="line">  ans[cnt] = T[i];<span class="comment">//和文本串进行拷贝</span></span><br><span class="line">  <span class="keyword">while</span> (q &gt; <span class="number">0</span> &amp;&amp; T[i] != P[q + <span class="number">1</span>]) &#123;<span class="comment">//while和下面的if为KMP匹配的过程</span></span><br><span class="line">   q = Pre[q];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (T[i] == P[q + <span class="number">1</span>]) &#123;</span><br><span class="line">   q++;</span><br><span class="line">  &#125;</span><br><span class="line">  Pos[cnt] = q;<span class="comment">//记录当前坐标匹配成功的长度</span></span><br><span class="line">  <span class="keyword">if</span> (q == PLen) &#123;<span class="comment">//如果此时和模式串匹配成功（令人讨厌的串）</span></span><br><span class="line">   cnt -= PLen;<span class="comment">//坐标直接左移PLen格，相当于删除操作</span></span><br><span class="line">   q = Pos[cnt];<span class="comment">//q=删除的串的左端已经匹配成功的个数</span></span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= cnt - <span class="number">1</span>; i++) &#123;<span class="comment">//输出答案</span></span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; ans[i];</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"> <span class="keyword">delete</span>[]ans;</span><br><span class="line"> <span class="keyword">delete</span>[]Pos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>最后来个全家福嘻嘻嘻</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ty&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">KMP</span> &#123;</span></span><br><span class="line"> <span class="keyword">friend</span> <span class="class"><span class="keyword">struct</span> <span class="title">KMP</span>&lt;int*&gt;;</span></span><br><span class="line"> Ty P, T;</span><br><span class="line"> <span class="keyword">int</span> PLen, TLen;</span><br><span class="line"> <span class="keyword">int</span> *Pre;</span><br><span class="line"> <span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">Input</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp;, <span class="keyword">const</span> <span class="built_in">string</span>&amp;)</span></span>;</span><br><span class="line"> <span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">Input</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp;)</span></span>;</span><br><span class="line"> <span class="function"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="title">Input</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span>&amp;, <span class="keyword">const</span> <span class="keyword">int</span>&amp;)</span></span>;</span><br><span class="line"> <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Clear</span><span class="params">()</span></span>;</span><br><span class="line"> <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">ProblemD</span><span class="params">()</span></span>;</span><br><span class="line"> <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">ProblemE</span><span class="params">()</span></span>;</span><br><span class="line"> <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">ProblemG</span><span class="params">()</span></span>;</span><br><span class="line"> <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">ProblemH</span><span class="params">()</span></span>;</span><br><span class="line"> <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">ComputePrefixFunction</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ty&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">bool</span> KMP&lt;Ty&gt;::Input(<span class="keyword">const</span> <span class="keyword">int</span>&amp;tlen, <span class="keyword">const</span> <span class="keyword">int</span>&amp;plen) &#123;</span><br><span class="line"> <span class="keyword">this</span>-&gt;TLen = tlen;</span><br><span class="line"> <span class="keyword">this</span>-&gt;PLen = plen;</span><br><span class="line"> P = <span class="keyword">new</span> <span class="keyword">int</span>[PLen + <span class="number">1</span>];</span><br><span class="line"> T = <span class="keyword">new</span> <span class="keyword">int</span>[TLen + <span class="number">1</span>];</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= TLen; i++) &#123;</span><br><span class="line">  <span class="built_in">cin</span> &gt;&gt; T[i];</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= PLen; i++) &#123;</span><br><span class="line">  <span class="built_in">cin</span> &gt;&gt; P[i];</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ty&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">bool</span> KMP&lt;Ty&gt;::Input(<span class="keyword">const</span> <span class="built_in">string</span>&amp;T, <span class="keyword">const</span> <span class="built_in">string</span>&amp;P) &#123;</span><br><span class="line"> <span class="keyword">this</span>-&gt;P = <span class="string">" "</span> + P;</span><br><span class="line"> <span class="keyword">this</span>-&gt;T = <span class="string">" "</span> + T;</span><br><span class="line"> PLen = P.size();</span><br><span class="line"> TLen = T.size();</span><br><span class="line"> <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ty&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">bool</span> KMP&lt;Ty&gt;::Input(<span class="keyword">const</span> <span class="built_in">string</span>&amp;P) &#123;</span><br><span class="line"> <span class="keyword">this</span>-&gt;P = <span class="string">" "</span> + P;</span><br><span class="line"> PLen = P.size();</span><br><span class="line"> <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ty&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> KMP&lt;Ty&gt;::ProblemD()&#123;</span><br><span class="line"> ComputePrefixFunction();</span><br><span class="line"> <span class="keyword">int</span> Len = PLen - Pre[PLen]; </span><br><span class="line"> <span class="keyword">if</span> (PLen%Len)</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="number">1</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"> <span class="keyword">else</span></span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; PLen / Len &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ty&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> KMP&lt;Ty&gt;::ProblemE() &#123;</span><br><span class="line"> ComputePrefixFunction();</span><br><span class="line"> <span class="keyword">int</span> k = Pre[PLen];</span><br><span class="line"> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;ve;</span><br><span class="line">  <span class="keyword">while</span> (k &gt; <span class="number">0</span>) &#123;</span><br><span class="line">  ve.push_back(k);</span><br><span class="line">  k = Pre[k];</span><br><span class="line"> &#125;</span><br><span class="line">  <span class="keyword">for</span> (<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::reverse_iterator it = ve.rbegin(); it != ve.rend(); it++) &#123;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; *it &lt;&lt; <span class="string">' '</span>;</span><br><span class="line"> &#125;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; PLen &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ty&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> KMP&lt;Ty&gt;::ProblemG() &#123;</span><br><span class="line"> ComputePrefixFunction();</span><br><span class="line"> <span class="keyword">int</span> q = <span class="number">0</span>;</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= TLen; i++) &#123;</span><br><span class="line">  <span class="keyword">while</span> (q &gt; <span class="number">0</span> &amp;&amp; P[q + <span class="number">1</span>] != T[i]) &#123;</span><br><span class="line">   q = Pre[q];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (P[q + <span class="number">1</span>] == T[i]) &#123;</span><br><span class="line">   q++;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (q == PLen) &#123;</span><br><span class="line">   <span class="built_in">cout</span> &lt;&lt; i - PLen + <span class="number">1</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   q = Pre[q];</span><br><span class="line">   <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="built_in">cout</span> &lt;&lt; <span class="number">-1</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"> <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ty&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> KMP&lt;Ty&gt;::ProblemH() &#123;</span><br><span class="line"> ComputePrefixFunction();</span><br><span class="line"> <span class="keyword">int</span> cnt = <span class="number">1</span>;</span><br><span class="line"> <span class="keyword">char</span>*ans= <span class="keyword">new</span> <span class="keyword">char</span>[TLen + <span class="number">2</span>];</span><br><span class="line"> <span class="keyword">int</span>*Pos = <span class="keyword">new</span> <span class="keyword">int</span>[TLen + <span class="number">5</span>];</span><br><span class="line"> <span class="keyword">int</span> q = <span class="number">0</span>;</span><br><span class="line"> Pos[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= TLen; i++, cnt++) &#123;</span><br><span class="line">  ans[cnt] = T[i];</span><br><span class="line">  <span class="keyword">while</span> (q &gt; <span class="number">0</span> &amp;&amp; T[i] != P[q + <span class="number">1</span>]) &#123;</span><br><span class="line">   q = Pre[q];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (T[i] == P[q + <span class="number">1</span>]) &#123;</span><br><span class="line">   q++;</span><br><span class="line">  &#125;</span><br><span class="line">  Pos[cnt] = q;</span><br><span class="line">  <span class="keyword">if</span> (q == PLen) &#123;</span><br><span class="line">   cnt -= PLen;</span><br><span class="line">   q = Pos[cnt];</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= cnt - <span class="number">1</span>; i++) &#123;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; ans[i];</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"> <span class="keyword">delete</span>[]ans;</span><br><span class="line"> <span class="keyword">delete</span>[]Pos;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ty&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> KMP&lt;Ty&gt;::ComputePrefixFunction() &#123;</span><br><span class="line"> Pre = <span class="keyword">new</span> <span class="keyword">int</span>[PLen + <span class="number">1</span>];</span><br><span class="line"> Pre[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line"> <span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> q = <span class="number">2</span>; q &lt;= PLen; q++) &#123;</span><br><span class="line">  <span class="keyword">while</span> (k &gt; <span class="number">0</span> &amp;&amp; P[k + <span class="number">1</span>] != P[q]) &#123;</span><br><span class="line">   k = Pre[k];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (P[k + <span class="number">1</span>] == P[q]) &#123;</span><br><span class="line">   k++;</span><br><span class="line">  &#125;</span><br><span class="line">  Pre[q] = k;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> KMP&lt;<span class="built_in">string</span>&gt;::Clear() &#123;</span><br><span class="line"> <span class="keyword">delete</span>[]Pre;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> KMP&lt;<span class="keyword">int</span>*&gt;::Clear() &#123;</span><br><span class="line"> <span class="keyword">delete</span>[]P;</span><br><span class="line"> <span class="keyword">delete</span>[]T;</span><br><span class="line"> <span class="keyword">delete</span>[]Pre;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>End</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94KMP%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D%E7%AE%97%E6%B3%95/" data-id="ck62371tx000sk0upgpd33jmr" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E6%B1%82%E6%9C%80%E5%A4%A7%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          学习笔记——求最大回文子串
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/01/31/%E5%85%B3%E4%BA%8E%E5%8F%AF%E8%BE%BE%E7%9F%A9%E9%98%B5%E7%9A%84O(N_N)%E7%AE%97%E6%B3%95%E5%92%8C%E5%BC%BA%E5%88%86%E5%9B%BE%E7%9A%84O(E)%E7%AE%97%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">关于可达矩阵的O(N_N)算法和强分图的O(E)算法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" rel="tag">后缀自动机</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" style="font-size: 10px;">后缀自动机</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/">学习笔记——拓扑排序</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/">学习笔记——最小生成树</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%B9%B6%E6%9F%A5%E9%9B%86%EF%BC%88%E4%B8%8A%EF%BC%89%E6%A8%A1%E6%9D%BF%E5%92%8C%E7%A7%8D%E7%B1%BB%E5%B9%B6%E6%9F%A5%E9%9B%86/">学习笔记——并查集（上）模板和种类并查集</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%B9%B6%E6%9F%A5%E9%9B%86%EF%BC%88%E4%B8%8B%EF%BC%89%E5%B8%A6%E6%9D%83%E5%B9%B6%E6%9F%A5%E9%9B%86/">学习笔记——并查集（下）带权并查集</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%8F%8C%E5%90%91BFS/">学习笔记——双向BFS</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Awesome<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>

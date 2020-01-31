@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>学习笔记——Tire树 | SCUGoodGuy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="简介字典树，即Trie树，是一种常用的数据结构。比如一个单词“apple”，可以分为五个字母，一般以一个虚节点为起始节点，记为$root$，那么apple这个单词就可以表示为$root$-&gt;a-&gt;p-&gt;p-&gt;l-&gt;e,同理，$bad$就是$root$-&gt;b-&gt;a-&gt;d。字典树的优点在于其不仅增加单词的复杂度是线性的，其查询单词或前缀的复杂度也是线性的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习笔记——Tire树">
+<meta property="og:url" content="http://yoursite.com/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94Tire%E6%A0%91/index.html">
+<meta property="og:site_name" content="SCUGoodGuy">
+<meta property="og:description" content="简介字典树，即Trie树，是一种常用的数据结构。比如一个单词“apple”，可以分为五个字母，一般以一个虚节点为起始节点，记为$root$，那么apple这个单词就可以表示为$root$-&gt;a-&gt;p-&gt;p-&gt;l-&gt;e,同理，$bad$就是$root$-&gt;b-&gt;a-&gt;d。字典树的优点在于其不仅增加单词的复杂度是线性的，其查询单词或前缀的复杂度也是线性的">
+<meta property="og:locale" content="zh_CH">
+<meta property="article:published_time" content="2020-01-31T11:27:18.105Z">
+<meta property="article:modified_time" content="2020-01-31T11:27:18.137Z">
+<meta property="article:author" content="Awesome">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="SCUGoodGuy" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SCUGoodGuy</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">蒟蒻的博客</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-学习笔记——Tire树" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94Tire%E6%A0%91/" class="article-date">
+  <time datetime="2020-01-31T11:27:18.105Z" itemprop="datePublished">2020-01-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      学习笔记——Tire树
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>字典树，即Trie树，是一种常用的数据结构。比如一个单词“apple”，可以分为五个字母，一般以一个虚节点为起始节点，记为$root$，那么apple这个单词就可以表示为$root$-&gt;a-&gt;p-&gt;p-&gt;l-&gt;e,同理，$bad$就是$root$-&gt;b-&gt;a-&gt;d。字典树的优点在于其不仅增加单词的复杂度是线性的，其查询单词或前缀的复杂度也是线性的。就好像翻字典一样，先找第一个字母，再第二个，比盲目的大海捞针要快上许多。</p>
+<h1 id="一种错误的实现"><a href="#一种错误的实现" class="headerlink" title="一种错误的实现"></a>一种错误的实现</h1><p>之前我有想到过开一个二维的数组$tree$[字母][深度],来记录，比如bad就是tree[‘b’][0]=tree[‘a’][1]=tree[‘d’][2]=true。但是这样做会存在一个问题，比如我记录单词aa,ab,以及ba,那就会使得tree[‘a’][0],tree[‘b][0],tree[‘a’][1],tree[‘b’][1]=true，然后查询bb时就会出现“bb存在”的错误，然而“bb”是不存在的，所以这种表达方式会产生一些无中生有的交叉错误。</p>
+<h1 id="正常的实现方式（数组实现）"><a href="#正常的实现方式（数组实现）" class="headerlink" title="正常的实现方式（数组实现）"></a>正常的实现方式（数组实现）</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">以一个例子来说明。</span><br><span class="line">给出一个数组a，求max( (a[i] + a[j]) xor a[k] ) (i, j, k互不相同)</span><br><span class="line">Input</span><br><span class="line">第一行给出T代表数据组数,对于每一组数据第一行给出n代表数组中数的数量,第二行给出n个数分别代表a中第i的元素</span><br><span class="line">1≤T≤1000，3≤n≤1000，0≤ai≤1e9且n&gt;100的数据最多只有10组Output对于每一组数据,输出答案，每组数据占一行。</span><br><span class="line">Sample Input</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">1 2 3</span><br><span class="line">3</span><br><span class="line">100 200 300</span><br><span class="line">Sample Output</span><br><span class="line">6</span><br><span class="line">400</span><br></pre></td></tr></table></figure>
+<p>这里以01字典树为例。（即用字典树表示二进制，其他情况类似）<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Tree</span> &#123;</span></span><br><span class="line"> <span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span><span class="comment">//表示一个节点</span></span><br><span class="line">  <span class="built_in">array</span>&lt;<span class="keyword">int</span>, 2&gt; next;<span class="comment">//该节点的两个儿子（0或1）</span></span><br><span class="line">  <span class="keyword">int</span> size = <span class="number">0</span>;<span class="comment">//该节点被覆盖的次数，就是有多少个二进制数字经过该节点（删除数据时用到）</span></span><br><span class="line"> &#125;;</span><br><span class="line"> <span class="built_in">vector</span>&lt;node&gt; tree;<span class="comment">//字典树</span></span><br><span class="line"> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;Data;<span class="comment">//记录数组a</span></span><br><span class="line"> <span class="keyword">int</span> N;</span><br><span class="line"> <span class="keyword">int</span> now = <span class="number">0</span>;</span><br><span class="line"> <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;/加入一个数字</span><br><span class="line">  <span class="built_in">bitset</span>&lt;33&gt; bit = num;<span class="comment">//先转化为二进制形式</span></span><br><span class="line">  <span class="keyword">int</span> root = <span class="number">0</span>;<span class="comment">//默认以0为我们的虚根</span></span><br><span class="line">  tree[root].size++;<span class="comment">//0被覆盖</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">32</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">   <span class="keyword">int</span> id = bit[i];</span><br><span class="line">   <span class="keyword">if</span> (!tree[root].next[id])<span class="comment">//如果覆盖过程种发现之前还未出现该节点</span></span><br><span class="line">    tree[root].next[id] = ++now;<span class="comment">//新分配一个节点</span></span><br><span class="line">   root = tree[root].next[id]; <span class="comment">//往下覆盖</span></span><br><span class="line">   <span class="keyword">if</span> (root &gt;= (<span class="keyword">int</span>)tree.size() - <span class="number">1</span>)</span><br><span class="line">    tree.resize(root + <span class="number">1</span>);</span><br><span class="line">   tree[root].size++;<span class="comment">//被覆盖到的节点覆盖数加1</span></span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Insert</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (N--) &#123;</span><br><span class="line">   <span class="keyword">int</span> num;</span><br><span class="line">   <span class="built_in">cin</span> &gt;&gt; num;</span><br><span class="line">   Add(num);</span><br><span class="line">   Data.emplace_back(num);</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Delete</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span>&amp;num)</span><span class="comment">//删除 &#123;</span></span></span><br><span class="line"><span class="function">  <span class="built_in">bitset</span>&lt;33&gt; bit </span>= num;</span><br><span class="line">  <span class="keyword">int</span> root = <span class="number">0</span>;</span><br><span class="line">  tree[root].size--;<span class="comment">//虚节点覆盖数减一</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">32</span>; i &gt;= <span class="number">0</span>; i--) &#123;<span class="comment">//类似增加</span></span><br><span class="line">   <span class="keyword">if</span> (root &gt;= (<span class="keyword">int</span>)tree.size() - <span class="number">1</span>)</span><br><span class="line">    tree.resize(root + <span class="number">1</span>);</span><br><span class="line">   <span class="keyword">int</span> id = bit[i];</span><br><span class="line">   root = tree[root].next[id];</span><br><span class="line">   tree[root].size--;</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">getAns</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span>&amp; i,<span class="keyword">const</span> <span class="keyword">int</span>&amp;j)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">bitset</span>&lt;33&gt; bit = i + j;<span class="comment">//求i+j的最大xor值</span></span><br><span class="line">  <span class="keyword">int</span> Ans = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> root = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> index = <span class="number">32</span>; index &gt;= <span class="number">0</span>; index--) &#123;</span><br><span class="line">   <span class="keyword">if</span> (root &gt;= (<span class="keyword">int</span>)tree.size() - <span class="number">1</span>)</span><br><span class="line">    tree.resize(root + <span class="number">1</span>);</span><br><span class="line">   <span class="keyword">int</span> id = bit[index];</span><br><span class="line">   <span class="keyword">if</span> (tree[root].next[!id] &amp;&amp;<span class="comment">/*其子节点被覆盖数为0时，说明该节点为叶节点，走不了咯*/</span> tree[tree[root].next[!id]].size)<span class="comment">//优先选择和当前为相反的，由于是高位到低位（高位权重大）。</span></span><br><span class="line">    Ans += (<span class="number">1</span> &lt;&lt; index), root = tree[root].next[!id];<span class="comment">//1 xor 0 = 1</span></span><br><span class="line">   <span class="keyword">else</span><span class="comment">/* if (tree[root].next[id] &amp;&amp; tree[tree[root].next[id]].size)*/</span></span><br><span class="line">   <span class="comment">//这个条件可以去掉，因为建树时无论数字多大，都是建成33位，有前导0补足，所以每个数字二进制长度一样，所以一定有路。</span></span><br><span class="line">    root = tree[root].next[id];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> Ans;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="keyword">inline</span> <span class="title">Input</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">cin</span> &gt;&gt; N;</span><br><span class="line">  tree.resize(<span class="number">1</span>);</span><br><span class="line">  Insert();</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">inline</span> <span class="keyword">long</span> <span class="keyword">long</span> <span class="title">Query</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> Ans = <span class="number">0</span>;<span class="comment">//暴力枚举。。。</span></span><br><span class="line">  <span class="comment">//从1到N，删两个点求最大，再加回去。。。</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; Data.size(); i++) &#123;</span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; Data.size(); j++) &#123;</span><br><span class="line">    Delete(Data[i]); Delete(Data[j]);</span><br><span class="line">    Ans = max(Ans, getAns(Data[i], Data[j]));</span><br><span class="line">    Add(Data[i]); Add(Data[j]);</span><br><span class="line">   &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> Ans;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">Clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  tree.clear();</span><br><span class="line">  Data.clear();</span><br><span class="line"> &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"> ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line"> <span class="keyword">int</span> T;</span><br><span class="line"> <span class="built_in">cin</span> &gt;&gt; T;</span><br><span class="line"> <span class="keyword">while</span> (T--) &#123;</span><br><span class="line">  Ans.Input();</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; Ans.Query() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  Ans.Clear();</span><br><span class="line"> &#125;</span><br><span class="line"> system(<span class="string">"pause"</span>);</span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94Tire%E6%A0%91/" data-id="ck62371ty000tk0up8mc6ch6o" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%A4%9A%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF%EF%BC%88Floyd%E7%AE%97%E6%B3%95%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          学习笔记——多源最短路（Floyd算法）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E6%B1%82%E6%9C%80%E5%A4%A7%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">学习笔记——求最大回文子串</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" rel="tag">后缀自动机</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" style="font-size: 10px;">后缀自动机</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/">学习笔记——拓扑排序</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/">学习笔记——最小生成树</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%B9%B6%E6%9F%A5%E9%9B%86%EF%BC%88%E4%B8%8A%EF%BC%89%E6%A8%A1%E6%9D%BF%E5%92%8C%E7%A7%8D%E7%B1%BB%E5%B9%B6%E6%9F%A5%E9%9B%86/">学习笔记——并查集（上）模板和种类并查集</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%B9%B6%E6%9F%A5%E9%9B%86%EF%BC%88%E4%B8%8B%EF%BC%89%E5%B8%A6%E6%9D%83%E5%B9%B6%E6%9F%A5%E9%9B%86/">学习笔记——并查集（下）带权并查集</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94%E5%8F%8C%E5%90%91BFS/">学习笔记——双向BFS</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Awesome<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
