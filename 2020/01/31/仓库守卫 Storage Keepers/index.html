@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>仓库守卫 Storage Keepers | SCUGoodGuy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="UVA10163这道题需要两次dp 1. 求最小安全指数最大值定义：$dp[i][j]$为考虑前i个人看守前j个仓库最小安全指数最大值,$SafetyIndex[i]$为第$i$个人的能力值。初始化：$dp[i][0]&#x3D;inf$（常数&#x2F;0&#x3D;无穷大）剩下的$dp&#x3D;0$转移方程： dp[i][j]&#x3D;max(dp[i][j], min(dp[i - 1][x], SafetyIndex[i] &#x2F; (j">
+<meta property="og:type" content="article">
+<meta property="og:title" content="仓库守卫 Storage Keepers">
+<meta property="og:url" content="http://yoursite.com/2020/01/31/%E4%BB%93%E5%BA%93%E5%AE%88%E5%8D%AB%20Storage%20Keepers/index.html">
+<meta property="og:site_name" content="SCUGoodGuy">
+<meta property="og:description" content="UVA10163这道题需要两次dp 1. 求最小安全指数最大值定义：$dp[i][j]$为考虑前i个人看守前j个仓库最小安全指数最大值,$SafetyIndex[i]$为第$i$个人的能力值。初始化：$dp[i][0]&#x3D;inf$（常数&#x2F;0&#x3D;无穷大）剩下的$dp&#x3D;0$转移方程： dp[i][j]&#x3D;max(dp[i][j], min(dp[i - 1][x], SafetyIndex[i] &#x2F; (j">
+<meta property="og:locale" content="zh_CH">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200122161535588.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2020-01-31T10:45:18.825Z">
+<meta property="article:modified_time" content="2020-01-31T10:45:18.830Z">
+<meta property="article:author" content="Awesome">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200122161535588.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70">
+  
+    <link rel="alternate" href="/atom.xml" title="SCUGoodGuy" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SCUGoodGuy</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">蒟蒻的博客</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-仓库守卫 Storage Keepers" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/31/%E4%BB%93%E5%BA%93%E5%AE%88%E5%8D%AB%20Storage%20Keepers/" class="article-date">
+  <time datetime="2020-01-31T10:45:18.825Z" itemprop="datePublished">2020-01-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      仓库守卫 Storage Keepers
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://img-blog.csdnimg.cn/20200122161535588.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><a href="https://www.luogu.com.cn/problem/UVA10163" target="_blank" rel="noopener">UVA10163</a><br>这道题需要两次dp</p>
+<h3 id="1-求最小安全指数最大值"><a href="#1-求最小安全指数最大值" class="headerlink" title="1. 求最小安全指数最大值"></a>1. 求最小安全指数最大值</h3><p><strong>定义</strong>：<br>$dp[i][j]$为考虑前i个人看守前j个仓库最小安全指数最大值,$SafetyIndex[i]$为第$i$个人的能力值。<br><strong>初始化</strong>：<br>$dp[i][0]=inf$（常数/0=无穷大）<br>剩下的$dp=0$<br><strong>转移方程</strong>：</p>
+<script type="math/tex; mode=display">dp[i][j]=max(dp[i][j], min(dp[i - 1][x], SafetyIndex[i] / (j - x))),(0\leq x<j)</script><p>其中$x$为前$i$个人看守前$x$个仓库，而剩下的$j-x$个仓库由第$i$个人看守。<br>这样，$dp[M][N]$就是所求答案。</p>
+<h3 id="2-求此时的最小花费"><a href="#2-求此时的最小花费" class="headerlink" title="2. 求此时的最小花费"></a>2. 求此时的最小花费</h3><p><strong>定义</strong>：<br>$dp[i][j]$为考虑前$i$个人看守前$j$个仓库并满足求出的安全指数条件的最小花费<br><strong>初始化</strong>：<br>$dp[0][i]=inf$<br>剩下的dp元素=0<br><strong>转移方程</strong>：</p>
+<script type="math/tex; mode=display">if(SafetyIndex[i] / (j - x) >=  上一问求出的结果)\\dp[i][j] = min(dp[i][j], dp[i - 1][x] + SafetyIndex[i])</script><h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">static</span> <span class="keyword">int</span> inf = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"><span class="keyword">int</span> N, M;</span><br><span class="line"><span class="keyword">int</span> SafetyIndex[<span class="number">31</span>];</span><br><span class="line"><span class="keyword">int</span> dp[<span class="number">31</span>][<span class="number">101</span>];</span><br><span class="line"><span class="comment">//考虑前i个人看守前j个仓库最小安全指数最大值</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">Input</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; N &gt;&gt; M;</span><br><span class="line">	<span class="keyword">if</span> (!N &amp;&amp; !M) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= M; ++i) &#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; SafetyIndex[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DP</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">//第一次dp</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= M; ++i) &#123;</span><br><span class="line">		dp[i][<span class="number">0</span>] = inf;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= M; ++i) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= N; ++j) &#123;</span><br><span class="line">			dp[i][j] = dp[i - <span class="number">1</span>][j];</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">0</span>; x &lt; j; ++x) &#123;</span><br><span class="line">				dp[i][j] = max(dp[i][j], min(dp[i - <span class="number">1</span>][x], SafetyIndex[i] / (j - x)));</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> Min = dp[M][N];</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; Min &lt;&lt; <span class="string">' '</span>;</span><br><span class="line">	<span class="comment">//如果安全指数为0，则谁都不雇佣最便宜</span></span><br><span class="line">	<span class="keyword">if</span> (!Min) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="number">0</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//第二次dp</span></span><br><span class="line">	<span class="built_in">memset</span>(dp, <span class="number">0x0</span>, <span class="keyword">sizeof</span>(dp));</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; i++) &#123; </span><br><span class="line">		dp[<span class="number">0</span>][i] = inf;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= M; ++i) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= N; ++j) &#123;</span><br><span class="line">			dp[i][j] = dp[i - <span class="number">1</span>][j];</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">0</span>; x &lt; j; ++x) &#123;</span><br><span class="line">				<span class="keyword">if</span> (SafetyIndex[i] / (j - x) &gt;= Min) &#123;</span><br><span class="line">					dp[i][j] = min(dp[i][j], dp[i - <span class="number">1</span>][x] + SafetyIndex[i]);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; dp[M][N] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (Input()) &#123;</span><br><span class="line">		<span class="built_in">memset</span>(dp, <span class="number">0x0</span>, <span class="keyword">sizeof</span>(dp));</span><br><span class="line">		DP();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>每次的$dp[i]$都只用到$dp[i-1]$，所以可以滚动优化降一维，过了那就算了吧233333。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/31/%E4%BB%93%E5%BA%93%E5%AE%88%E5%8D%AB%20Storage%20Keepers/" data-id="ck621ll090009doupcrna9s6p" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/01/31/%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4%20Alibaba/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          阿里巴巴 Alibaba
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/01/31/%E5%AD%A6%E4%B9%A0%E5%90%91%E9%87%8F%20Learning%20Vector/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">学习向量 Learning Vector</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" rel="tag">后缀自动机</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" style="font-size: 10px;">后缀自动机</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/01/31/%E5%88%87%E8%9B%8B%E7%B3%95%20Cake%20slicing/">切蛋糕 Cake slicing</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E4%B8%B2%E6%8A%98%E5%8F%A0%20Folding/">串折叠 Folding</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E7%94%B5%E5%AD%90%E4%BA%BA%E7%9A%84%E5%9F%BA%E5%9B%A0%20Cyborg%20Genes/">电子人的基因 Cyborg Genes</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E5%AF%86%E7%A0%81%E9%94%81%20Locker/">密码锁 Locker</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4%20Alibaba/">阿里巴巴 Alibaba</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Awesome<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
