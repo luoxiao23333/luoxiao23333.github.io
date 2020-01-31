@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Longest Common Substring（最长公共子串） | SCUGoodGuy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="SP1811  题目描述A string is finite sequence of characters over a non-empty finite set Σ.In this problem, Σ is the set of lowercase letters.Substring, also called factor, is a consecutive sequence of chara">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Longest Common Substring（最长公共子串）">
+<meta property="og:url" content="http://yoursite.com/2020/01/31/Longest%20Common%20Substring%EF%BC%88%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2%EF%BC%89/index.html">
+<meta property="og:site_name" content="SCUGoodGuy">
+<meta property="og:description" content="SP1811  题目描述A string is finite sequence of characters over a non-empty finite set Σ.In this problem, Σ is the set of lowercase letters.Substring, also called factor, is a consecutive sequence of chara">
+<meta property="og:locale" content="zh_CH">
+<meta property="article:published_time" content="2020-01-31T09:07:34.501Z">
+<meta property="article:modified_time" content="2020-01-31T09:07:34.512Z">
+<meta property="article:author" content="Awesome">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="SCUGoodGuy" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SCUGoodGuy</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">蒟蒻的博客</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Longest Common Substring（最长公共子串）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/01/31/Longest%20Common%20Substring%EF%BC%88%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2%EF%BC%89/" class="article-date">
+  <time datetime="2020-01-31T09:07:34.501Z" itemprop="datePublished">2020-01-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Longest Common Substring（最长公共子串）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://www.luogu.com.cn/problem/SP1811" target="_blank" rel="noopener">SP1811</a></p>
+<blockquote>
+<p>题目描述<br>A string is finite sequence of characters over a non-empty finite set Σ.<br>In this problem, Σ is the set of lowercase letters.<br>Substring, also called factor, is a consecutive sequence of characters occurrences at least once in a string.<br>Now your task is simple, for two given strings, find the length of the longest common substring of them.<br>Here common substring means a substring of two or more strings.<br> 输入格式<br> The input contains exactly two lines, each line consists of no more than 250000 lowercase letters, representing a string.<br> 输出格式<br> The length of the longest common substring. If such string doesn’t exist, print “0” instead.<br> 题意翻译<br>  输入2 个长度不大于250000的字符串，输出这2 个字符串的最长公共子串。如果没有公共子串则输出0 。<br>Translated by @xyz32768<br> 输入输出样例<br> 输入<br>    alsdfkjfjkdsal<br>fdjskalajfkdsla<br>输出<br>   3</p>
+</blockquote>
+<p>有两个字符串$A$和$B$，我们要求它们的最长公共连续子串。<br>首先，我们对$A$建立一个$SAM$。<br><strong>定义</strong>：$Len$为当前$B$的前$i$个字符组成的子串与$A$的最长公共子序列，$State$为当前状态，初始化为0（初始状态）。$next(State,ch)$为在$State$状态节点处往$ch$道路走的下一状态。<br><strong>匹配</strong>：<br>然后我们从$B[i=0]$开始，在$A$的$SAM$上走，一个一个匹配，若：</p>
+<ol>
+<li>当前状态朝着$B[i]$往下走有路，说明可以继续往下匹配，就接着走，即$State=next(State,B[i])，++Len$。</li>
+<li>如果没有路了，就跳到当前状态在后缀连接树上的父节点，如果父节点还是没有$B[i]$的路，就一直往上跳（即$State=link(State)$），直到遇到能往下走的边。此时就令$Len=len(当前状态)+1$，$State=next(State,B[i])$。</li>
+<li>如果跳到头了都没有能走的路的话，就说明要从B[i]开始重新匹配，令$Len=0，State=0$。</li>
+</ol>
+<p><strong>原理</strong>：如果$B[i]$在当前位置下失配（无路可走），那么说明当前状态下的所有子串都失配了，但是它的后缀连接树上的父节点不一定失配，就继续往上找，即相当于当前已经匹配的$A$的子串的左边界往右移，然后继续找路。如果一直没路，就一直往上找，直到达到 初始状态 ，如果此时仍没有路的话，说名在当前$Len$长度下已经是$B[上一次从初始状态开始匹配的i]$开始的最长公共子串了，无法在加长了。那就让$Ans=max(Ans,Len)$，让后以$B[i]$为新的开头从初始状态重新开始匹配。即整个过程就是再找$B$的所有前缀的后缀最长能和$A$匹配多少。<br>*[初始状态]:A构建的SAM的初始状态。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAXN = <span class="number">250005</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">char</span></span><br><span class="line">A[MAXN],</span><br><span class="line">B[MAXN];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">SAM</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> size, last;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">		<span class="keyword">int</span> len = <span class="number">0</span>, link = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> next[<span class="number">26</span>];</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			len = link = <span class="number">0</span>;</span><br><span class="line">			<span class="built_in">memset</span>(next, <span class="number">0</span>, <span class="keyword">sizeof</span>(next));</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; node[MAXN * <span class="number">2</span>];</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">			node[i].clear();</span><br><span class="line">		&#125;</span><br><span class="line">		node[<span class="number">0</span>].link = <span class="number">-1</span>;</span><br><span class="line">		size = <span class="number">1</span>;</span><br><span class="line">		last = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">char</span> x)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> ch = x - <span class="string">'a'</span>;</span><br><span class="line">		<span class="keyword">int</span> cur = size++;</span><br><span class="line">		node[cur].len = node[last].len + <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">int</span> p = last;</span><br><span class="line">		<span class="keyword">while</span> (p != <span class="number">-1</span> &amp;&amp; !node[p].next[ch]) &#123;</span><br><span class="line">			node[p].next[ch] = cur;</span><br><span class="line">			p = node[p].link;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (p == <span class="number">-1</span>) &#123;</span><br><span class="line">			node[cur].link = <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">int</span> q = node[p].next[ch];</span><br><span class="line">			<span class="keyword">if</span> (node[p].len + <span class="number">1</span> == node[q].len) &#123;</span><br><span class="line">				node[cur].link = q;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">int</span> clone = size++;</span><br><span class="line">				node[clone] = node[q];</span><br><span class="line">				node[clone].len = node[p].len + <span class="number">1</span>;</span><br><span class="line">				<span class="keyword">while</span> (p != <span class="number">-1</span> &amp;&amp; node[p].next[ch] == q) &#123;</span><br><span class="line">					node[p].next[ch] = clone;</span><br><span class="line">					p = node[p].link;</span><br><span class="line">				&#125;</span><br><span class="line">				node[q].link = node[cur].link = clone;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		last = cur;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;sam;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getNextState</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span>&amp; CurState,<span class="keyword">int</span> Loc)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> sam.node[CurState].next[Loc - <span class="string">'a'</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Compute</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span></span><br><span class="line">		&amp;&amp; Ans = <span class="number">0</span>,</span><br><span class="line">		&amp;&amp; CurState = <span class="number">0</span>,</span><br><span class="line">		&amp;&amp; Len = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">		<span class="comment">//如果有路可走，就走噻</span></span><br><span class="line">		<span class="keyword">if</span> (getNextState(CurState, B[i])) &#123;</span><br><span class="line">			CurState = getNextState(CurState, B[i]);</span><br><span class="line">			++Len;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//否则</span></span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="comment">//跳link</span></span><br><span class="line">			<span class="keyword">for</span> (CurState = sam.node[CurState].link;; CurState = sam.node[CurState].link) &#123;</span><br><span class="line">				<span class="comment">//如果跳到了</span></span><br><span class="line">				<span class="keyword">if</span> (CurState &gt; <span class="number">0</span> &amp;&amp; getNextState(CurState, B[i])) &#123;</span><br><span class="line">					Len = sam.node[CurState].len + <span class="number">1</span>;</span><br><span class="line">					CurState = getNextState(CurState, B[i]);</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="comment">//如果跳到初始状态。</span></span><br><span class="line">				<span class="keyword">else</span> <span class="keyword">if</span> (CurState &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">					Len = <span class="number">0</span>;</span><br><span class="line">					CurState = <span class="number">0</span>;</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		Ans = max(Ans, Len);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> Ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s%s"</span>, &amp;A, &amp;B);</span><br><span class="line">	<span class="keyword">int</span> Len_A = <span class="built_in">strlen</span>(A);</span><br><span class="line">	sam.init();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; Len_A; ++i) &#123;</span><br><span class="line">		sam.insert(A[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d"</span>, Compute(<span class="built_in">strlen</span>(B)));</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/01/31/Longest%20Common%20Substring%EF%BC%88%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2%EF%BC%89/" data-id="ck61y29c00000ckup409g24r9" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/01/31/K-thoccurrence(%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA%E4%B8%8A%E5%90%88%E5%B9%B6%E6%9D%83%E5%80%BC%E7%BA%BF%E6%AE%B5%E6%A0%91+%E6%A0%91%E4%B8%8A%E5%80%8D%E5%A2%9E)/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">K-thoccurrence(后缀自动机上合并权值线段树+树上倍增)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" rel="tag">后缀自动机</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" style="font-size: 10px;">后缀自动机</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">January 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/01/31/Longest%20Common%20Substring%EF%BC%88%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2%EF%BC%89/">Longest Common Substring（最长公共子串）</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/K-thoccurrence(%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA%E4%B8%8A%E5%90%88%E5%B9%B6%E6%9D%83%E5%80%BC%E7%BA%BF%E6%AE%B5%E6%A0%91+%E6%A0%91%E4%B8%8A%E5%80%8D%E5%A2%9E)/">K-thoccurrence(后缀自动机上合并权值线段树+树上倍增)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/01/31/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Awesome<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+</html>
