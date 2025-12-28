@@ -1,0 +1,768 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Undergrad Operating System Overview | Always on the way</title><meta name="author" content="Xiao L.,lxiao70@gatech.edu"><meta name="copyright" content="Xiao L."><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="@[toc] Chapter 2 Operating System Overviewoperating System definition（定义） controls the execution of application programs Acts as an interface between applications and hardware  Operating System Object">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Undergrad Operating System Overview">
+<meta property="og:url" content="http://example.com/2022/12/10/Course%20Note/SCU/Undergrad%20Operating%20System%20Overview/index.html">
+<meta property="og:site_name" content="Always on the way">
+<meta property="og:description" content="@[toc] Chapter 2 Operating System Overviewoperating System definition（定义） controls the execution of application programs Acts as an interface between applications and hardware  Operating System Object">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/74.jpeg">
+<meta property="article:published_time" content="2022-12-11T02:03:25.000Z">
+<meta property="article:modified_time" content="2025-12-28T03:34:06.395Z">
+<meta property="article:author" content="Xiao L.">
+<meta property="article:tag" content="OS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/74.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/12/10/Course%20Note/SCU/Undergrad%20Operating%20System%20Overview/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Undergrad Operating System Overview',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-12-27 22:34:06'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">82</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-home"></i><span> Blog</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/LogseqNote/index.html#/page/Papers"><i class="fa-fw fas fa-sticky-note"></i><span> Research Note</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> Courses</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/GraduateCourses/"><i class="fa-fw fas fa-book"></i><span> Graduate Courses</span></a></li><li><a class="site-page child" href="/OnlineCourses/"><i class="fa-fw fas fa-book"></i><span> Online Courses</span></a></li><li><a class="site-page child" href="/UndergraduateCourses/"><i class="fa-fw fas fa-book"></i><span> Undergraduate</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/Link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/74.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Always on the way</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-home"></i><span> Blog</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/LogseqNote/index.html#/page/Papers"><i class="fa-fw fas fa-sticky-note"></i><span> Research Note</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> Courses</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/GraduateCourses/"><i class="fa-fw fas fa-book"></i><span> Graduate Courses</span></a></li><li><a class="site-page child" href="/OnlineCourses/"><i class="fa-fw fas fa-book"></i><span> Online Courses</span></a></li><li><a class="site-page child" href="/UndergraduateCourses/"><i class="fa-fw fas fa-book"></i><span> Undergraduate</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/Link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Undergrad Operating System Overview</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-12-11T02:03:25.000Z" title="Created 2022-12-10 21:03:25">2022-12-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-12-28T03:34:06.395Z" title="Updated 2025-12-27 22:34:06">2025-12-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Course-Note/">Course Note</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Undergrad Operating System Overview"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>@[toc]</p>
+<h2 id="Chapter-2-Operating-System-Overview"><a href="#Chapter-2-Operating-System-Overview" class="headerlink" title="Chapter 2 Operating System Overview"></a>Chapter 2 Operating System Overview</h2><h3 id="operating-System-definition（定义）"><a href="#operating-System-definition（定义）" class="headerlink" title="operating System definition（定义）"></a>operating System definition（定义）</h3><ul>
+<li>controls the execution of application programs</li>
+<li>Acts as an interface between applications and hardware</li>
+</ul>
+<h3 id="Operating-System-Objectives-（操作系统目标）"><a href="#Operating-System-Objectives-（操作系统目标）" class="headerlink" title="Operating System Objectives （操作系统目标）"></a>Operating System Objectives （操作系统目标）</h3><ol>
+<li>As User/Computer Interface —Convenience/<strong>方便</strong><br>Makes the computer more convenient to use</li>
+<li>As Resource Manager—Efficiency /<strong>有效</strong><br>Allows computer system resources to be used in an efficient manner</li>
+<li>As System Software—Ability to evolve /<strong>扩展</strong><br>Permit effective development, testing, and introduction of new system functions without interfering with service.</li>
+</ol>
+<h3 id="Kernel-内核"><a href="#Kernel-内核" class="headerlink" title="Kernel(内核)"></a>Kernel(内核)</h3><ul>
+<li>Portion of operating system that is in main memory</li>
+<li>Contains most frequently used functions</li>
+<li>Also called the nucleus（核子）</li>
+</ul>
+<h3 id="Job-Control-Language-JCL"><a href="#Job-Control-Language-JCL" class="headerlink" title="Job Control Language (JCL)"></a>Job Control Language (JCL)</h3><ul>
+<li>Special type of programming language</li>
+<li>Provides instruction to the monitor</li>
+</ul>
+<h3 id="Hardware-Features"><a href="#Hardware-Features" class="headerlink" title="Hardware Features"></a>Hardware Features</h3><ol>
+<li>Memory protection<br>Do not allow the memory area containing the monitor to be altered</li>
+<li>Timer<br>Prevents a job from monopolizing(独占) the system</li>
+<li>Privileged instructions<br>Certain machine level instructions can only be executed by the monitor</li>
+<li>Interrupts<br>This  feature gives the OS more flexibility in relinquishing control to and regaining control from user programs</li>
+</ol>
+<h3 id="CPU-mode"><a href="#CPU-mode" class="headerlink" title="CPU mode"></a>CPU mode</h3><ol>
+<li>User program executes in user mode(用户模式)<br>Certain instructions may not be executed<br>Some memory can not be accessed</li>
+<li>Monitor executes in system mode(系统模式)<br>Kernel mode(内核模式)<br>Privileged instructions are executed<br>Protected areas of memory may be accessed<h3 id="Processes-consists-of-three-components（进程的三个组成部分）"><a href="#Processes-consists-of-three-components（进程的三个组成部分）" class="headerlink" title="Processes consists of three components（进程的三个组成部分）"></a>Processes consists of three components（进程的三个组成部分）</h3></li>
+<li>An executable program /code（代码段）</li>
+<li>Associated data needed by the program（数据段）</li>
+<li>Execution context of the program (the core)<br>All information the operating system needs to manage the process</li>
+</ol>
+<h3 id="The-factors-that-should-be-considered（应考虑的因素）"><a href="#The-factors-that-should-be-considered（应考虑的因素）" class="headerlink" title="The factors that should be considered（应考虑的因素）"></a>The factors that should be considered（应考虑的因素）</h3><ul>
+<li>Fairness(公平性)<br>Give equal and fair access to resources</li>
+<li>Differential responsiveness(有差别的响应性)<br>Discriminate among different classes of processes</li>
+<li>Efficiency(高效性)<br>Maximize throughput(吞吐量), minimize response time(响应时间), and accommodate as many users as possible<h3 id="OS-has-five-storage-management-responsibilities"><a href="#OS-has-five-storage-management-responsibilities" class="headerlink" title="OS has five storage management responsibilities"></a>OS has five storage management responsibilities</h3></li>
+<li>Process isolation(进程隔离)</li>
+<li>Automatic allocation and management(自动分配和管理)</li>
+<li>Support of modular programming(模块化程序设计)</li>
+<li>Protection and access control (保护与存取控制)</li>
+<li>Long-term storage(长期存储)<h3 id="Virtual-Memory-VM"><a href="#Virtual-Memory-VM" class="headerlink" title="Virtual Memory / VM"></a>Virtual Memory / VM</h3></li>
+<li>Allows programmers to address memory from a logical point of view</li>
+<li>No hiatus(脱节) between the execution of successive processes while one process was written out to secondary store and the successor process was read in<h4 id="Page"><a href="#Page" class="headerlink" title="Page"></a>Page</h4></li>
+<li>Allows process to be comprised of a number of fixed-size blocks, called pages<br>Each page may be located any where in main memory<h4 id="Virtual-Memory-Addressing"><a href="#Virtual-Memory-Addressing" class="headerlink" title="Virtual Memory Addressing"></a>Virtual Memory Addressing</h4></li>
+<li>Storage system consists of main memory and auxiliary memory</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20191229031644382.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3 id="Symmetric-multiprocessing-SMP-（对称多处理）"><a href="#Symmetric-multiprocessing-SMP-（对称多处理）" class="headerlink" title="Symmetric multiprocessing (SMP)  （对称多处理）"></a>Symmetric multiprocessing (SMP)  （对称多处理）</h3><ul>
+<li>There are multiple processors</li>
+<li>These processors share same main memory and I/O facilities</li>
+<li>All processors can perform the same functions</li>
+<li>The OS of an SMP schedules processes or threads across all of the processors.</li>
+<li>SMP has a number of potential（潜在的） advantages over uniprocessor（单处理机）architecture, including the following:<ol>
+<li>Performance 性能</li>
+<li>Availability 可用性</li>
+<li>Incremental  growth 可增长</li>
+<li>Scaling可扩展，多型号<h3 id="Distributed-operating-systems（分布式操作系统）"><a href="#Distributed-operating-systems（分布式操作系统）" class="headerlink" title="Distributed operating systems（分布式操作系统）"></a>Distributed operating systems（分布式操作系统）</h3></li>
+</ol>
+</li>
+<li>Provides the illusion of a single main memory space and single secondary memory space</li>
+</ul>
+<h3 id="Object-oriented-design（面向对象程序设计）"><a href="#Object-oriented-design（面向对象程序设计）" class="headerlink" title="Object-oriented design（面向对象程序设计）"></a>Object-oriented design（面向对象程序设计）</h3><ul>
+<li>Used for adding modular extensions to a small kernel<br>Enables programmers to customize an operating system without disrupting system integrity</li>
+</ul>
+<h3 id="UnSolve-Questions"><a href="#UnSolve-Questions" class="headerlink" title="UnSolve Questions"></a>UnSolve Questions</h3><ol>
+<li>The operating system provides many types of services to end-users, programmers and system designers, including:<br>a. Built-in user applications<br>b. All of the above<br>c. Relational database capabilities with the internal file system<br>$\color{red}{d}$. Error detection and response<br>Feedback： the OS typically provides services in the following areas：• Program development • Program execution • Access to I/O devices • Controlled access to files • System access • Error detection and response • Accounting</li>
+<li>A computer hardware feature that is vital to the effective operation of a multiprogramming operating system is:<br>a. Very large memory<br>b. Multiple processors<br>$\color{red}{c}$. I/O interrupts and DMA<br>d. All of the above<br>Feedback： 支持 I/O 中断和直接存储器访问<br>3.Which of the following major line of computer system development created problems in timing and synchronization that contributed to the development of the concept of the process?<br>a. Multiprogramming batch operation systems<br>b. Real time transaction systems<br>c. Time sharing systems<br>$\color{red}{d}$. All of the above </li>
+</ol>
+<h2 id="Chapter-3-Process-Description-and-Control"><a href="#Chapter-3-Process-Description-and-Control" class="headerlink" title="Chapter 3  Process Description and Control"></a>Chapter 3  Process Description and Control</h2><h3 id="Process-Control-Block-PCB-进程控制块"><a href="#Process-Control-Block-PCB-进程控制块" class="headerlink" title="Process Control Block (PCB) (进程控制块)"></a>Process Control Block (PCB) (进程控制块)</h3><ol>
+<li><p>Contains the process elements</p>
+<p> <strong>Process Identification</strong></p>
+<p> <strong>Processor State Information</strong></p>
+<ul>
+<li>User-Visible Registers</li>
+<li>Control and Status Registers</li>
+<li><p>Stack Pointers</p>
+<p><strong>Process Control information</strong></p>
+</li>
+<li>Scheduling and State Information</li>
+<li>Data Structuring (link information)</li>
+<li>Interprocess Communication</li>
+<li>Process Privileges</li>
+<li>Memory Management</li>
+<li>Resource Ownership and Utilization</li>
+</ul>
+</li>
+<li><p>Created and manage by the operating system</p>
+</li>
+<li>Allows support for multiple processes<h3 id="Two-State-Process-Model"><a href="#Two-State-Process-Model" class="headerlink" title="Two-State Process Model"></a>Two-State Process Model</h3>Process may be in one of two states</li>
+<li>Running</li>
+<li>Not-running<br><img src="https://img-blog.csdnimg.cn/20191229035448897.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><strong>Limit:</strong></li>
+</ol>
+<ul>
+<li>Not-running<br>ready to execute<br>waiting for I/O (blocked)（阻塞）</li>
+<li>Dispatcher（调度器） cannot just select the process that has been in the queue the longest because it may be blocked</li>
+</ul>
+<h3 id="Five-State-Model"><a href="#Five-State-Model" class="headerlink" title="Five-State Model"></a>Five-State Model</h3><p><strong>States：</strong></p>
+<ol>
+<li>Running(运行态)</li>
+<li>Ready(就绪态)</li>
+<li>Blocked(阻塞态)</li>
+<li>New(新建态)</li>
+<li>Exit(退出态)<br><img src="https://img-blog.csdnimg.cn/20191229035842652.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><h3 id="Operating-System-Control-Structures"><a href="#Operating-System-Control-Structures" class="headerlink" title="Operating System Control Structures"></a>Operating System Control Structures</h3></li>
+<li>Information about the current status of each process and resource (每个进程和资源的当前状态)</li>
+<li>Tables are constructed for each entity the operating system manages (操作系统构造并维护他所管理的所有实体的信息表)<h3 id="Memory-Tables"><a href="#Memory-Tables" class="headerlink" title="Memory Tables"></a>Memory Tables</h3></li>
+<li>Allocation of main memory to processes (分配给进程的主存)</li>
+<li>Allocation of secondary memory to processes (分配给进程的辅存)</li>
+<li>Protection attributes for access to shared memory regions(共享内存区域的保护属性)</li>
+<li>Information needed to manage virtual memory(虚拟内存的管理信息)<h3 id="I-O-Tables"><a href="#I-O-Tables" class="headerlink" title="I/O Tables"></a>I/O Tables</h3></li>
+<li>I/O device is available or assigned(分配状态)</li>
+<li>Status of I/O operation </li>
+<li>Location in main memory being used as the source or destination of the I/O transfer (数据传送的源和目的地址)<h3 id="File-Tables"><a href="#File-Tables" class="headerlink" title="File Tables"></a>File Tables</h3></li>
+<li>Existence of files</li>
+<li>Location on secondary memory</li>
+<li>Current Status</li>
+<li>Attributes<h4 id="Process-Table"><a href="#Process-Table" class="headerlink" title="Process Table"></a>Process Table</h4>Every entry is a description of a process image (进程映像）</li>
+</ol>
+<ul>
+<li>process image: Collection of program, data, stack, attributes<br><img src="https://img-blog.csdnimg.cn/20191229041424221.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><h3 id="Process-Creation"><a href="#Process-Creation" class="headerlink" title="Process Creation"></a>Process Creation</h3></li>
+</ul>
+<ol>
+<li>Assign a unique process identifier（进程标识符）</li>
+<li>Allocate space for the process</li>
+<li>Initialize process control block</li>
+<li>Set up appropriate linkages（建立适当的联系）<br>Ex: add new process to linked list used for scheduling queue</li>
+<li>Create of expand other data structures<br>Ex: maintain an accounting file<h3 id="When-to-Switch-a-Process"><a href="#When-to-Switch-a-Process" class="headerlink" title="When to Switch a Process"></a>When to Switch a Process</h3></li>
+<li>Interrupt</li>
+</ol>
+<ul>
+<li>Clock interrupt<br>process has executed for the maximum allowable time slice</li>
+<li>I/O interrupt</li>
+<li>Memory fault<br>Referenced virtual address is not in main memory, so it must be brought in.</li>
+</ul>
+<ol>
+<li>Trap</li>
+</ol>
+<ul>
+<li>error or exception occurred</li>
+<li>may cause process to be moved to Exit state</li>
+</ul>
+<ol>
+<li>Supervisor call (System Call)</li>
+</ol>
+<ul>
+<li>such as file open<h3 id="Process-Switching"><a href="#Process-Switching" class="headerlink" title="Process Switching"></a>Process Switching</h3></li>
+</ul>
+<ol>
+<li>Save context of processor including program counter and other registers</li>
+<li>Update the process control block of the process and change the process’s state that is currently in the Running state</li>
+<li>Move process control block to appropriate queue – ready; blocked; ready/suspend</li>
+<li>Select another process for execution</li>
+<li>Update the process control block of the process selected and change it state</li>
+<li>Update memory-management data structures</li>
+<li>Restore context of the selected process<h3 id="Execution-of-the-Operating-System"><a href="#Execution-of-the-Operating-System" class="headerlink" title="Execution of the Operating System"></a>Execution of the Operating System</h3></li>
+<li>Non-process Kernel（无进程内核）<br>Execute kernel outside of any process<br>Operating system code is executed as a separate entity that operates in privileged mode</li>
+<li>Execution Within User Processes(在用户进程中执行)<br>Operating system software within context of a user process<br>Process executes in privileged mode when executing operating system code</li>
+<li>Process-Based Operating System（基于进程的OS）<br>Implement operating system as a collection of system processes<br>Useful in multi-processor or multi-computer environment<h3 id="UnSolved-Questions"><a href="#UnSolved-Questions" class="headerlink" title="UnSolved Questions"></a>UnSolved Questions</h3></li>
+<li>The behavior of a processor can be characterized by examining:<br>a. Multiple process traces<br>b. A single process trace<br>c. All of the above<br>$\color{red}{d}$. The interleaving of the process traces<br>Feedback: We can characterize behavior of the processor by showing how the traces of the various processes are interleaved. 单进程（process）使用single process trace 测试<ol>
+<li>The Process Image element that contains the modifiable part of the user space is called the:<br>a. User Program<br>$\color{red}{b}$. None of the above<br>c. System Stack<br>d. Process Control Block<br>Feedback: User data.<br>3.In a typical UNIX system, the element of the process image that contains the processor status information is the:<br>a. All of the above<br>b. System-level context<br>$\color{red}{c}$. Register context<br>d. User-level context<br>Feedback： 处理器状态信息保存在寄存器上下文中 </li>
+<li>In a Process Model that implements two suspend states, a valid state transition is represented by:<br>a. Ready -&gt; Ready/Suspend<br>b. Running -&gt; Ready/Suspend<br>c. Ready/Suspend -&gt; Ready<br>$\color{red}{d}$. All of the above </li>
+</ol>
+</li>
+</ol>
+<h2 id="Chapter-4-Threads-SMP-and-Microkernels"><a href="#Chapter-4-Threads-SMP-and-Microkernels" class="headerlink" title="Chapter 4  Threads, SMP, and Microkernels"></a>Chapter 4  Threads, SMP, and Microkernels</h2><h3 id="线程和进程定义"><a href="#线程和进程定义" class="headerlink" title="线程和进程定义"></a>线程和进程定义</h3><ul>
+<li>Dispatching is referred to as a thread or lightweight process(调度的单位称为线程或轻量进程)</li>
+<li>Resource of ownership is referred to as a process or task(资源所有权的单位称为进程或者任务)<h3 id="Benefits-优点-of-Threads"><a href="#Benefits-优点-of-Threads" class="headerlink" title="Benefits(优点) of Threads"></a>Benefits(优点) of Threads</h3></li>
+</ul>
+<ol>
+<li>Takes less time to create a new thread than a process <strong>(创建快)</strong></li>
+<li>Less time to terminate a thread than a process <strong>(结束快)</strong></li>
+<li>Less time to switch between two threads within the same process <strong>(切换快)</strong></li>
+<li>Since threads within the same process share memory and files, they can communicate with each other without invoking the kernel <strong>(通信快)</strong><h3 id="User-Level-Threads-ULT，用户级线程"><a href="#User-Level-Threads-ULT，用户级线程" class="headerlink" title="User-Level Threads (ULT，用户级线程)"></a>User-Level Threads (ULT，用户级线程)</h3></li>
+<li>Multithread implemented by a threads library</li>
+<li>All thread management is done by the application</li>
+<li>The kernel is not aware of the existence of threads &amp; scheduling is done on a process basis<h3 id="Kernel-Level-Threads-内核级线程"><a href="#Kernel-Level-Threads-内核级线程" class="headerlink" title="Kernel-Level Threads(内核级线程)"></a>Kernel-Level Threads(内核级线程)</h3></li>
+<li>Kernel maintains context information for the process and the threads</li>
+<li>Scheduling is done on a thread basis<h3 id="Advantages-of-ULT-to-KLT"><a href="#Advantages-of-ULT-to-KLT" class="headerlink" title="Advantages of ULT to KLT"></a>Advantages of ULT to KLT</h3></li>
+<li>Less overhead更少的代价 of thread switches(mode switches do not required) </li>
+<li>Scheduling can be application specific</li>
+<li>ULTs can run on any operating system<h3 id="Disadvantages-of-ULT-to-KLT"><a href="#Disadvantages-of-ULT-to-KLT" class="headerlink" title="Disadvantages of ULT to KLT"></a>Disadvantages of ULT to KLT</h3></li>
+<li>One thread is  blocked, all other threads of the process are blocked</li>
+<li>A multithreaded application cannot take advantage of multiprocessing</li>
+<li>Ways to work around these drawbacks:<br>Multiple processes 多进程<br>Jacketing套管  非阻塞调用<h3 id="Advantages-of-KLT-to-ULT"><a href="#Advantages-of-KLT-to-ULT" class="headerlink" title="Advantages of KLT to ULT"></a>Advantages of KLT to ULT</h3></li>
+</ol>
+<ul>
+<li>Overcomes the two principal drawbacks of the ULT</li>
+</ul>
+<ol>
+<li>Multiple threads in one process can simultaneously run on multiple processors</li>
+<li>One threads blocked cannot make the other threads within the same process blocked</li>
+<li>Kernel routines例程 themselves can be multithreaded<h3 id="Disadvantages-of-KLT-to-ULT"><a href="#Disadvantages-of-KLT-to-ULT" class="headerlink" title="Disadvantages of KLT to ULT"></a>Disadvantages of KLT to ULT</h3></li>
+</ol>
+<ul>
+<li>The principal disadvantage is that thread switch requires mode switches(模式切换) to the kernel<h3 id="Microkernel"><a href="#Microkernel" class="headerlink" title="Microkernel"></a>Microkernel</h3></li>
+<li>Small operating system core</li>
+<li>Contains only essential core operating systems functions</li>
+<li>Many services traditionally included in the operating system are now external subsystems<br>Device drivers<br>File systems<br>Virtual memory manager<br>Windowing system<br>Security services</li>
+<li>相对的内核称为单体内核—monolithic kernel<h3 id="Benefits-of-a-Microkernel-Organization"><a href="#Benefits-of-a-Microkernel-Organization" class="headerlink" title="Benefits of a Microkernel Organization"></a>Benefits of a Microkernel Organization</h3></li>
+</ul>
+<ol>
+<li>Uniform interface(一致接口) on request made by a process<br>Don’t distinguish between kernel-level and user-level services<br>All services are provided by means of message passing</li>
+<li>Extensibility(可扩展性)<br>Allows the addition of new services</li>
+<li>Flexibility(灵活性)<br>New features added<br>Existing features can be subtracted(删减)</li>
+<li>Portability(可移植性)<br>Changes needed to port the system to a new processor is changed in the microkernel  - not in the other services</li>
+<li>Reliability(可靠性)<br>Modular design<br>Small microkernel can be rigorously tested</li>
+<li>Distributed system support<br>Message are sent without knowing what the target machine is （消息的发送不用关心目标是本机还是异机）</li>
+<li>Object-oriented operating system<br>Components are objects with clearly defined interfaces that can be interconnected to form software (定义接口明晰的组件，以搭积木方式通过组件互联构造软件)<h3 id="Microkernel-Performance"><a href="#Microkernel-Performance" class="headerlink" title="Microkernel Performance"></a>Microkernel Performance</h3></li>
+</ol>
+<ul>
+<li>A potential disadvantage of microkernels that is often cited is that of performance (消息传递机制是微内核工作的主要机制，消息传递必须通过内核，因此性能较差)</li>
+<li>One response to this problem was to enlarge the microkernel by reintegrating critical servers and drivers back into the OS  (把关键服务重新纳入内核，减少消息传递开销)</li>
+</ul>
+<h3 id="Microkernel-Design"><a href="#Microkernel-Design" class="headerlink" title="Microkernel Design"></a>Microkernel Design</h3><ul>
+<li>The microkernel must include those functions that depend directly on the hardware. Those functions fall into the following general categories:</li>
+</ul>
+<ol>
+<li>Low level memory management<br>Mapping each virtual page to a physical page frame</li>
+<li>Interprocess communication (IPC)<br>Message<br>Port</li>
+<li>I/O and interrupt management<br>he microkernel transforms interrupts into messages and dispatches messages to device-specific user-level interrupt handling.<br>Driver thread<h3 id="UnSolved-Question"><a href="#UnSolved-Question" class="headerlink" title="UnSolved Question"></a>UnSolved Question</h3></li>
+<li>Early operating systems that were designed with little concern about structure are typically referred to as:<br>$\color{red}{a}$. Monolithic operating systems<br>b. Kernel operating systems<br>c. All of the above<br>d. Layered operating systems<br>Feedback： 单体结构的操作系统</li>
+<li>In low-level microkernel memory management, an example of an operation that can support external paging and virtual memory management is the:<br>a. Map operation<br>b. Flush operation<br>c. Grant operation<br>$\color{red}{d}$. All of the above<br> Feedback： 三个微内核操作支持内核外的分页和虚存管理 授权、映射、刷新 <ol>
+<li>In a W2K system, the state that a thread enters when it has been unblocked and the resource for which it has been blocked is not yet available is called the:<br>a. Waiting state<br>b. Standby state<br>c. None of the above<br>$\color{red}{d}$. Transition state<br>Feedback： 过渡态 </li>
+<li>In a Solaris system, a User-Level Thread (ULT) that enters the active state is assigned to a:<br>a. Heavy-Weight Process (HWP)<br>$\color{red}{b}$. Light-Weight Process (LWP)<br>c. None of the above<br>d. Kernel thread<br>Feedback： 轻量级进程 </li>
+<li>In a Linux system, when a new process is cloned, the two processes share the same:<br>a. Process identifier<br>$\color{red}{b}$. Virtual memory<br>c. task_struct data structure<br>d. All of the above<br>Feedback： 克隆后共享同一个虚存<ol>
+<li>An example of a system that implements a single process with multiple threads is:<br>a. WIN 2000<br>b. All of the above<br>c. Solaris<br>$\color{red}{d}$. Java </li>
+</ol>
+</li>
+<li>In a SMP system, each processor maintains a local cache and must alert all other processors that a change to cache update has taken place. This is referred to as the:<br>$\color{red}{a}$. Cache coherency problem<br>b. Interconnection mechanism problem<br>c. None of the above<br>d. Synchronization mechanism problem<br>Feedback： 高速缓存的一致性问题</li>
+</ol>
+</li>
+</ol>
+<h2 id="Chapter-5-Mutual-Exclusion-互斥-and-Synchronization-同步"><a href="#Chapter-5-Mutual-Exclusion-互斥-and-Synchronization-同步" class="headerlink" title="Chapter 5 Mutual Exclusion(互斥) and  Synchronization(同步)"></a>Chapter 5 Mutual Exclusion(互斥) and  Synchronization(同步)</h2><h3 id="Concurrency-arises-in-three-different-contexts"><a href="#Concurrency-arises-in-three-different-contexts" class="headerlink" title="Concurrency arises in three different contexts:"></a>Concurrency arises in three different contexts:</h3><ol>
+<li>Multiple applications(多应用程序)<br>Multiprogramming</li>
+<li>Structured application(结构化应用程序)<br>Some application can be designed as a set of concurrent processes</li>
+<li>Operating-system structure(操作系统结构)<br>Operating system is a set of processes or threads<h3 id="Some-Key-Term-Related-To-Currency"><a href="#Some-Key-Term-Related-To-Currency" class="headerlink" title="Some Key Term Related To Currency"></a>Some Key Term Related To Currency</h3><img src="https://img-blog.csdnimg.cn/20191230114939481.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><h3 id="Race-Condition-竞争条件"><a href="#Race-Condition-竞争条件" class="headerlink" title="Race Condition(竞争条件)"></a>Race Condition(竞争条件)</h3></li>
+</ol>
+<ul>
+<li>A race condition occurs when multiple processes or threads read and write data items so that the final result depends on the order of execution of instructions in the multiple processes or thread.<br>(竞争条件发生在当多个进程或者线程在读写数据时，其最终结果依赖于多个进程或者线程的指令执行顺序) <h3 id="Process-Interactions（进程交互）"><a href="#Process-Interactions（进程交互）" class="headerlink" title="Process Interactions（进程交互）"></a>Process Interactions（进程交互）</h3><img src="https://img-blog.csdnimg.cn/20191230115307810.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><h3 id="Requirements-for-Mutual-Exclusion"><a href="#Requirements-for-Mutual-Exclusion" class="headerlink" title="Requirements for Mutual Exclusion"></a>Requirements for Mutual Exclusion</h3></li>
+</ul>
+<ol>
+<li>Only one process at a time is allowed in the critical section for a resource (一次只允许一个进程进入临界区，忙则等待)</li>
+<li>A process that halts in its noncritical section must do so without interfering（干扰） with other processes (阻塞于临界区外的进程不能干涉其它进程)</li>
+<li>No deadlock or starvation (不会发生饥饿和死锁，有限等待)</li>
+<li>A process must not be delayed access to a critical section when there is no other process using it (闲则让进)</li>
+<li>No assumptions are made about relative process speeds or number of processes (对相关进程的执行速度和处理器数目没有要求)</li>
+<li>A process remains inside its critical section for a finite time only (有限占用)</li>
+</ol>
+<h3 id="Implement-of-Semaphores"><a href="#Implement-of-Semaphores" class="headerlink" title="Implement of Semaphores"></a>Implement of Semaphores</h3><ul>
+<li>Implement in hardware or firmware(固件)</li>
+<li>Implement in software, e.g. Dekker or Peterson</li>
+<li>Implement by inhibit interrupts(中断禁止) for a single-processor system <h3 id="Monitors"><a href="#Monitors" class="headerlink" title="Monitors"></a>Monitors</h3></li>
+</ul>
+<ol>
+<li>Local data variables are accessible only by the monitor</li>
+<li>Process enters monitor by invoking one of its procedures</li>
+<li>Only one process may be executing in the monitor at a time</li>
+<li>A monitor supports synchronization by the use of condition variables</li>
+<li>cwait(c): Suspend execution of the calling process on condition c. The monitor is now available for use by another process.</li>
+<li>csignal(c): Resume execution of some process blocked after a cwait on the same condition. If there are several such processes, choose one of them; if there is no such process, do nothing.</li>
+<li>Note that monitor wait and signal operations are different from those for the semaphore. <strong>If a process in a monitor signals and no task is waiting on the condition variable, the signal is lost.</strong></li>
+</ol>
+<p><em>[condition variables]:条件变量
+</em>[Monitors]:管程</p>
+<h3 id="Addressing"><a href="#Addressing" class="headerlink" title="Addressing"></a>Addressing</h3><h4 id="Direct-addressing"><a href="#Direct-addressing" class="headerlink" title="Direct addressing"></a>Direct addressing</h4><ul>
+<li>Send primitive includes a specific identifier of the destination process</li>
+<li>Receive primitive could know ahead of time which process a message is expected or receive primitive could use source parameter to return a value when the receive operation has been performed<br><em>[destination]:目标
+</em>[Receive primitive could know ahead of time which process a message is expected or receive primitive could use source parameter to return a value when the receive operation has been performed]:接收原语可以提前知道预期的消息处理过程，或者接收原语可以在执行接收操作时使用源参数返回值 <h4 id="Indirect-addressing"><a href="#Indirect-addressing" class="headerlink" title="Indirect addressing"></a>Indirect addressing</h4></li>
+<li>Messages are sent to a shared data structure consisting of queues</li>
+<li>Queues are called mailboxes</li>
+<li>One process sends a message to the mailbox and the other process picks up the message from the mailbox<h3 id="Coroutines"><a href="#Coroutines" class="headerlink" title="Coroutines"></a>Coroutines</h3>Processes that are designed to be able to pass execution control back and forth between themselves<h3 id="Weak-Semaphore-And-Strong-Semaphore"><a href="#Weak-Semaphore-And-Strong-Semaphore" class="headerlink" title="Weak Semaphore And Strong Semaphore"></a>Weak Semaphore And Strong Semaphore</h3></li>
+<li>Weak Semaphore</li>
+<li>Strong Semaphore<br><em>[Weak Semaphore]:A semaphore that does not specify the order in which processes are removed from the queue
+</em>[Strong Semaphore]:A semaphore that specify the order in which processes are removed from the queue<h3 id="UnSolvedQuestion"><a href="#UnSolvedQuestion" class="headerlink" title="UnSolvedQuestion"></a>UnSolvedQuestion</h3></li>
+</ul>
+<ol>
+<li>The following requirement must be met by any facility or capability that is to provide support for mutual exclusion:<br>$\color{red}{a}$. All of the above<br>b. Only one process at a time can be allowed into a critical code section<br>c. A process remains in its critical code section for a finite time only<br>d. No assumptions can be made about relative process speeds<ol>
+<li>In a system employing message passing, the typical message is divided into two primary sections<br>$\color{red}{a}$. None of the above<br>b. Body and mailbox<br>c. Destination ID and Source ID<br>d. Header and mailbox<br>Feedback:Header And Body<h2 id="Chapter-6-Concurrency-Deadlock-死锁-and-Starvation-饥饿"><a href="#Chapter-6-Concurrency-Deadlock-死锁-and-Starvation-饥饿" class="headerlink" title="Chapter 6  Concurrency: Deadlock(死锁) and Starvation(饥饿)"></a>Chapter 6  Concurrency: Deadlock(死锁) and Starvation(饥饿)</h2><h3 id="Resources-Categories-资源的分类"><a href="#Resources-Categories-资源的分类" class="headerlink" title="Resources Categories(资源的分类)"></a>Resources Categories(资源的分类)</h3><h4 id="Reusable-Resources"><a href="#Reusable-Resources" class="headerlink" title="Reusable Resources"></a>Reusable Resources</h4></li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>Used by only one process at a time and not depleted(耗尽) by that use</li>
+<li>Processes obtain resources that they later release for reuse by other processes</li>
+<li>Examples include processors, I/O channels, main and secondary memory, devices, and data structures such as files, databases</li>
+</ul>
+<p><em>[Reusable Resources]:可重用资源
+</em>[obtain]:获取</p>
+<h4 id="Consumable-Resources"><a href="#Consumable-Resources" class="headerlink" title="Consumable Resources"></a>Consumable Resources</h4><p>*[Consumable Resources]:可消费资源</p>
+<ul>
+<li>May be created (produced) and destroyed (consumed) by processes</li>
+<li>Examples include interrupts, signals, messages, and information in I/O buffers<h3 id="Restrictions-of-Deadlock-Avoidance"><a href="#Restrictions-of-Deadlock-Avoidance" class="headerlink" title="Restrictions of Deadlock Avoidance"></a>Restrictions of Deadlock Avoidance</h3>*[Restrictions]:限制</li>
+<li>Maximum resource requirement must be stated in advance</li>
+<li>Processes under consideration must be independent; no synchronization requirements</li>
+<li>There must be a fixed number of resources to allocate</li>
+<li>No process may exit while holding resources<h3 id="An-Integrated-Deadlock-Strategy"><a href="#An-Integrated-Deadlock-Strategy" class="headerlink" title="An Integrated Deadlock Strategy"></a>An Integrated Deadlock Strategy</h3><em>[Integrated]:综合
+</em>[Strategy]:策略</li>
+<li>Group resources into a number of different resource classes(资源分类)</li>
+<li>Use the linear ordering strategy(线性排序策略) defined previously for the prevention of circular wait to prevent deadlocks between resource classes(类与类之间用线性排序策略避免死锁)</li>
+<li>Within a resource class, use the algorithm that is most appropriate for that class(每个类中使用适合于该类的策略)</li>
+</ul>
+<p>permanent blocking<br>*[permanent blocking]:永久阻塞</p>
+<h3 id="银行家算法"><a href="#银行家算法" class="headerlink" title="银行家算法"></a>银行家算法</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/flowing_wind/article/details/82156968">转载链接</a><br>作者：<a target="_blank" rel="noopener" href="https://me.csdn.net/flowing_wind">Billy12138</a></p>
+<h3 id="UnSolved-Question-1"><a href="#UnSolved-Question-1" class="headerlink" title="UnSolved Question"></a>UnSolved Question</h3><ol>
+<li>A software mechanism that informs a process of the occurrences of asynchronous events in UNIX are called:<br>a. Pipes<br>b. Messages<br>c. Signals √<br>d. All of the above<br>信号是用于通知发生一个同步事件的软件机制 <ol>
+<li>In the Resource Allocation Denial approach to Deadlock Avoidance, a safe state is defined as one in which:<br>a. At least one potential process sequence does not result in a deadlock √<br>b. None of the above<br>c. All potential process sequences do not result in a deadlock:<br>d. Several potential process sequences do not result in a deadlock:<br>一条安全道路便可 </li>
+</ol>
+</li>
+</ol>
+<h2 id="Chapter-7-Memory-Management-内存管理"><a href="#Chapter-7-Memory-Management-内存管理" class="headerlink" title="Chapter 7  Memory Management(内存管理)"></a>Chapter 7  Memory Management(内存管理)</h2><h3 id="Memory-Management"><a href="#Memory-Management" class="headerlink" title="Memory Management"></a>Memory Management</h3><ul>
+<li>Subdividing memory to accommodate multiple processes</li>
+<li>Memory needs to be allocated to ensure a reasonable supply of ready processes to consume available processor time<br><em>[Subdividing memory to accommodate multiple processes]:为支持多道程序将内存进行划分
+</em>[Memory needs to be allocated to ensure a reasonable supply of ready processes to consume available processor time]:内存管理应确保有适当数目的就绪进程使用处理器时间<h3 id="Memory-Management-Requirements"><a href="#Memory-Management-Requirements" class="headerlink" title="Memory Management Requirements"></a>Memory Management Requirements</h3><strong>1. Relocation</strong></li>
+<li>Programmer does not know where the program will be placed in memory when it is executed</li>
+<li>While the program is executing, it may be swapped(交换) to disk and returned to main memory at a different location (relocated)</li>
+<li>Memory references(访问) must be translated in the code to actual physical memory address(物理内存地址)<br><em>[Relocation]:重定位<br><strong>2. Protection</strong>
+</em>[Protection]:保护</li>
+<li>Processes should not be able to reference memory locations in another process without permission or jump to instructions area of another process</li>
+<li>Normally, processes cannot access any portion of the OS, neither program nor data</li>
+<li>Impossible to check absolute addresses at compile time, instead, absolute addresses must be checked <strong>at rum time</strong>.</li>
+<li>Memory protection requirement must be satisfied by the processor <strong>(hardware)</strong> rather than the operating system </li>
+</ul>
+<p><strong>3. Sharing</strong><br>*[Sharing]:共享<br>Allow several processes to access the same portion of memory</p>
+<ul>
+<li>Share same copy of the program</li>
+<li>Share data structure to cooperate on some task</li>
+</ul>
+<p><strong>4. Logical Organization</strong><br>*[Logical Organization]:逻辑组织</p>
+<ul>
+<li>Main memory is organized in a linear address space, consisting of a sequence of bytes or words</li>
+<li>Programs are written in modules<ul>
+<li>Modules can be written and compiled independently</li>
+<li>Different degrees of protection given to modules (read-only, execute-only)</li>
+<li>Share modules among processes</li>
+</ul>
+</li>
+<li>Segmentation satisfies these requirements</li>
+</ul>
+<p><strong>5. Physical Organization</strong><br>*[Physical Organization]:物理组织</p>
+<ul>
+<li>Memory is organized into at least two levels, referred to as main memory and secondary memory</li>
+<li>Memory available for a program plus its data may be insufficient<ul>
+<li>Overlaying allows various modules to be assigned the same region of memory</li>
+</ul>
+</li>
+<li>Programmer does not know how much space will be available and where his/her program will be loaded in memory<br><em>[Overlaying]:覆盖：The practice in which a program and data are organized in such a way that various modules can be assigned the same region of memory
+</em>[Memory available for a program plus its data may be insufficient]:内存对程序和其数据来说可能不足</li>
+</ul>
+<h3 id="Memory-Partitioning"><a href="#Memory-Partitioning" class="headerlink" title="Memory Partitioning"></a>Memory Partitioning</h3><p>*[Partitioning]:分区</p>
+<h4 id="1-Fixed-Partitioning"><a href="#1-Fixed-Partitioning" class="headerlink" title="1. Fixed Partitioning"></a>1. Fixed Partitioning</h4><ul>
+<li>Alternatives for Fixed Partitioning <ul>
+<li>Equal-size partitions</li>
+<li>Unequal-size partitions</li>
+</ul>
+</li>
+<li>DisAdvantages<ul>
+<li>The number of active processes in the system is limited by the number of partitions</li>
+<li>Small jobs will not utilize partition efficiently</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-Dynamic-Partitioning"><a href="#2-Dynamic-Partitioning" class="headerlink" title="2. Dynamic Partitioning"></a>2. Dynamic Partitioning</h4><h5 id="Characteristics："><a href="#Characteristics：" class="headerlink" title="Characteristics："></a>Characteristics：</h5><ol>
+<li>Partitions are of variable length and number</li>
+<li>Process is allocated exactly as much memory as required</li>
+<li>Eventually get holes in the memory. This is called external fragmentation(外部碎片/外零头)</li>
+<li>Must use compaction(压缩) to shift(移动) processes so they are contiguous and all free memory is in one block<br>*[contiguous]:相连的</li>
+</ol>
+<h5 id="Dynamic-Partitioning-Placement-Algorithm"><a href="#Dynamic-Partitioning-Placement-Algorithm" class="headerlink" title="Dynamic Partitioning Placement Algorithm:"></a>Dynamic Partitioning Placement Algorithm:</h5><h6 id="1-Best-fit-algorithm"><a href="#1-Best-fit-algorithm" class="headerlink" title="1. Best-fit algorithm"></a>1. Best-fit algorithm</h6><ul>
+<li>Chooses the block that is closest in size to the request</li>
+<li>Worst performer overall</li>
+<li>Since smallest block is found for process, the smallest amount of fragmentation is left<br>Memory compaction must be done more often</li>
+</ul>
+<h6 id="2-First-fit-algorithm"><a href="#2-First-fit-algorithm" class="headerlink" title="2. First-fit algorithm"></a>2. First-fit algorithm</h6><ul>
+<li>Scans memory from the beginning and chooses the first available block that is large enough</li>
+<li>Simplest and usually fastest and best</li>
+<li>May have many process loaded in the front end of memory that must be searched over when trying to find a free block</li>
+</ul>
+<h6 id="3-Next-fit"><a href="#3-Next-fit" class="headerlink" title="3. Next-fit"></a>3. Next-fit</h6><ul>
+<li>Scans memory from the location of the last placement and chooses the next available block that is large enough</li>
+<li>More often allocate a block of memory at the end of memory where the largest block is found</li>
+<li>The largest block of memory is broken up into smaller blocks</li>
+<li>Compaction is required to obtain a large block at the end of memory<h4 id="3-Buddy-System"><a href="#3-Buddy-System" class="headerlink" title="3.Buddy System"></a>3.Buddy System</h4>*[Buddy System]:伙伴系统</li>
+<li>Entire space available is treated as a single block of 2$^U$ (e.g. 1M = $2^{20}$ ) </li>
+<li>If a request of size s such that $2^{U-1} \lt s \leq 2^U$, entire block is allocated</li>
+<li>Otherwise block is split into two equal buddies</li>
+<li>Process continues until smallest block greater than or equal to s is generated<br><img src="https://img-blog.csdnimg.cn/201912310532121.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></li>
+</ul>
+<h4 id="4-Relocation"><a href="#4-Relocation" class="headerlink" title="4.Relocation"></a>4.Relocation</h4><ul>
+<li>When program loaded into(载入) memory the actual (absolute) memory locations are determined</li>
+<li>A process may occupy different partitions which means different absolute memory locations during execution (from swapping，交换)</li>
+<li>Compaction will also cause a program to occupy a different partition which means different absolute memory locations<br>*[Compaction]:压缩</li>
+</ul>
+<h3 id="Paging"><a href="#Paging" class="headerlink" title="Paging"></a>Paging</h3><ul>
+<li>Partition memory into small equal fixed-size chunks(块) which are called frames(帧)</li>
+<li>Divide each process into small equal fixed-size chunks which are called pages(页). The size of pages are equal to the size of frames</li>
+<li>Operating system maintains a page table(页表) for each process<ul>
+<li>Contains the frame location(帧位置) for each page in the process</li>
+<li>Memory address consist of a page number(页号) and offset(偏移量) within the page<h3 id="Segmentation"><a href="#Segmentation" class="headerlink" title="Segmentation"></a>Segmentation</h3>*[Segmentation]:分段</li>
+</ul>
+</li>
+<li>Program and its data can be divided into a number of segments, all segments of all programs do not have to be of the same length</li>
+<li>There is a maximum segment length</li>
+<li>Addressing consist of two parts<ol>
+<li>segment number(段号) </li>
+<li>offset(偏移量)</li>
+</ol>
+</li>
+<li><p>Since segments are not equal, segmentation is similar to dynamic partitioning(动态分区)</p>
+<h2 id="Chapter-8-Virtual-Memory"><a href="#Chapter-8-Virtual-Memory" class="headerlink" title="Chapter 8 Virtual Memory"></a>Chapter 8 Virtual Memory</h2><h3 id="Resident-set"><a href="#Resident-set" class="headerlink" title="Resident set"></a>Resident set</h3><p>*[Resident set]:常驻集</p>
+<ul>
+<li>portion of process that is in main memory<h3 id="When-an-address-is-needed-that-is-not-in-main-memory"><a href="#When-an-address-is-needed-that-is-not-in-main-memory" class="headerlink" title="When an address is needed that is not in main memory:"></a>When an address is needed that is not in main memory:</h3></li>
+</ul>
+<ol>
+<li>An interrupt is generated, which is known as page fault interrupt(缺页中断)</li>
+<li><p>Operating system places the process in a blocking state</p>
+</li>
+<li><p>Piece of process that contains the logical address is brought into main memory</p>
+<ul>
+<li>Operating system issues a disk I/O Read request</li>
+<li>Another process is dispatched to run while the disk I/O takes place</li>
+<li>An interrupt is issued when disk I/O complete</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<ol>
+<li>operating system place the affected process in the Ready state<h3 id="Thrashing"><a href="#Thrashing" class="headerlink" title="Thrashing"></a>Thrashing</h3>*[Thrashing]:系统抖动/系统颠簸</li>
+</ol>
+<ul>
+<li>Swapping out a piece of a process just before that piece is needed</li>
+<li>Too much of this operations may leads the  processor spends most of its time swapping pieces rather than executing user instructions<h3 id="Inverted-Page-Table"><a href="#Inverted-Page-Table" class="headerlink" title="Inverted Page Table"></a>Inverted Page Table</h3>*[Inverted Page Table]:反向页表</li>
+<li>Used on PowerPC, UltraSPARC, and IA-64 architecture</li>
+<li>Page number portion of a virtual address is mapped into a hash value</li>
+<li>Hash value points to inverted page table</li>
+<li>Fixed proportion of real memory is required for the tables regardless of the number of processes or virtual pages supported</li>
+<li>Page table entry <ul>
+<li>Page number(页号)</li>
+<li>Process identifier(进程标志符)</li>
+<li>Control bits(控制位)</li>
+<li>Chain pointer(链指针)</li>
+</ul>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/反向页表/3565803?fr=aladdin">不理解点这个-&gt;百度百科</a></p>
+<h3 id="Fetch-Policy"><a href="#Fetch-Policy" class="headerlink" title="Fetch Policy"></a>Fetch Policy</h3><p>*[Fetch Policy]:读取策略<br> Determines when a page should be brought into memory</p>
+<ol>
+<li>Demand paging(请求分页式)<br>only brings pages into main memory when a reference is made to a location on the page<br>Many page faults when process first started</li>
+<li>Prepaging paging(预约分页式)<br>brings in more pages than needed<br>More efficient to bring in pages that reside contiguously on the disk<h3 id="Placement-Policy"><a href="#Placement-Policy" class="headerlink" title="Placement Policy"></a>Placement Policy</h3>*[Placement Policy]:放置策略<br>Determines where in real memory a process piece is to reside</li>
+</ol>
+<ul>
+<li>Important in a segmentation system and nonuniform memory access(NUMA, 非一致存储器访问) system (放置策略对分段系统和NUMA系统影响大)</li>
+<li>Paging or combined paging with segmentation hardware performs address translation and placement is usually irrelevant(放置策略对分页和段页式系统影响不大)</li>
+</ul>
+<h3 id="Replacement-Policy"><a href="#Replacement-Policy" class="headerlink" title="Replacement Policy"></a>Replacement Policy</h3><p>*[Replacement Policy]:置换策略<br>Which page is replaced?</p>
+<h4 id="Frame-Locking"><a href="#Frame-Locking" class="headerlink" title="Frame Locking"></a>Frame Locking</h4><ul>
+<li><p>If frame is locked, it may not be replaced, some examples:</p>
+<ol>
+<li>Kernel of the OS</li>
+<li>Important Control structures of OS</li>
+<li>I/O buffers</li>
+</ol>
+</li>
+<li>Associate a lock bit with each frame</li>
+</ul>
+<h5 id="1-Optimal-policy"><a href="#1-Optimal-policy" class="headerlink" title="1. Optimal policy"></a>1. Optimal policy</h5><p>*[Optimal]:最佳的</p>
+<ul>
+<li>Selects for replacement that page for which the time to the next reference is the longest(下次访问距当前时间最长的页)</li>
+<li>Impossible to have perfect knowledge of future events</li>
+</ul>
+<h4 id="2-Least-Recently-Used-LRU"><a href="#2-Least-Recently-Used-LRU" class="headerlink" title="2. Least Recently Used (LRU)"></a>2. Least Recently Used (LRU)</h4><p>*[Least Recently Used (LRU)]:最近最少使用</p>
+<ul>
+<li>Replaces the page that has not been referenced for the longest time(上次访问距当前时间最长的页)</li>
+<li>By the principle of locality, this should be the page least likely to be referenced in the near future</li>
+<li>Each page could be tagged with the time of last reference.  This would require a great deal of overhead.<br>*[overhead]:开销<h4 id="3-First-in-first-out-FIFO"><a href="#3-First-in-first-out-FIFO" class="headerlink" title="3.First-in, first-out (FIFO)"></a>3.First-in, first-out (FIFO)</h4>*[First-in, first-out (FIFO)]:先进先出</li>
+<li>Treats page frames allocated to a process as a circular buffer(把分配给进程的页帧看做是一个循环缓冲区)</li>
+<li>Pages are removed in round-robin style</li>
+<li>Simplest replacement policy to implement</li>
+<li>Page that has been in memory the longest is replaced</li>
+<li>These pages may be needed again very soon<br>*[round-robin]:循环<h4 id="4-Clock-Policy"><a href="#4-Clock-Policy" class="headerlink" title="4. Clock Policy"></a>4. Clock Policy</h4>*[Clock Policy]:时钟策略</li>
+<li>Additional bit called a use bit is association with every page</li>
+<li>When a page is first loaded in memory, the use bit is set to 1</li>
+<li>When the page is referenced, the use bit is set to 1</li>
+<li>When it is time to replace a page, the first frame encountered  with the use bit set to 0 is replaced</li>
+<li>During the search for replacement, each use bit set to 1 is changed to 0<br>*[use bit]:使用位<br><img src="https://img-blog.csdnimg.cn/20191231064119367.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><h3 id="Page-Buffering"><a href="#Page-Buffering" class="headerlink" title="Page Buffering"></a>Page Buffering</h3>Replaced page is added to one of two lists</li>
+<li>Free page list if page has not been modified (空闲页表) </li>
+<li>Modified page list (修改页表)</li>
+<li>Modified pages are written out in clusters rather than one at a time<h3 id="Process-Suspension"><a href="#Process-Suspension" class="headerlink" title="Process Suspension"></a>Process Suspension</h3>*[Suspension]:挂起</li>
+</ul>
+<ol>
+<li>Lowest priority process(最低优先级进程)</li>
+<li>Faulting process(页错误进程)<br>This process does not have its working set in main memory so it will be blocked anyway</li>
+<li>Last process activated(最后被激活的进程)<br>This process is least likely to have its working set resident</li>
+<li>Process with smallest resident set(驻留集最小的进程)<br>This process requires the least future effort to reload</li>
+<li>Largest process(占用空间最大的进程)<br>Obtains the most free frames </li>
+<li>Process with the largest remaining execution window(具有最大剩余执行窗口的进程)</li>
+</ol>
+<h3 id="UnSolved-Question-2"><a href="#UnSolved-Question-2" class="headerlink" title="UnSolved Question"></a>UnSolved Question</h3><ol>
+<li><p>In SVR4 and Solaris systems, the memory management scheme that manages user processes and disk I/O is called the:<br>a. Paging system √<br>b. None of the above<br>c. Virtual memory manager<br>d. Kernel memory allocator</p>
+</li>
+<li><p>In a combined paging/segmentation system, a user’s address space is broken up into a number of :<br>a. Fixed-size pages, which are in turn broken down into variable-sized segments<br>b. Segments or pages, at the discretion of the programmer<br>c. Variable-sized Segments, which are in turn broken down into fixed-size pages √<br>d. All of the above </p>
+<ol>
+<li>Sharing is achieved in a segmentation system by:<br>a. Having a common data area that all processes can share<br>b. Referencing a segment in the segment tables of more than one process √<br>c. All of the above<br>d. Each process segment table having a reference to the dispatcher main memory area</li>
+</ol>
+</li>
+</ol>
+<h2 id="Chapter-9-Uniprocessor-Scheduling"><a href="#Chapter-9-Uniprocessor-Scheduling" class="headerlink" title="Chapter 9 Uniprocessor Scheduling"></a>Chapter 9 Uniprocessor Scheduling</h2><h3 id="Types-of-Scheduling"><a href="#Types-of-Scheduling" class="headerlink" title="Types of Scheduling"></a>Types of Scheduling</h3><p><img src="https://img-blog.csdnimg.cn/20191231070714571.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>Scheduling and Process State Transitions(调度与进程状态转换)<br><img src="https://img-blog.csdnimg.cn/2019123107091241.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3 id="Alternative-of-Scheduling-Policies"><a href="#Alternative-of-Scheduling-Policies" class="headerlink" title="Alternative of Scheduling Policies"></a>Alternative of Scheduling Policies</h3><h4 id="Terms"><a href="#Terms" class="headerlink" title="Terms"></a>Terms</h4><ul>
+<li>Response time(响应时间)</li>
+<li>Turnaround time(周转时间)</li>
+<li>Normalized turnaround time(归一化周转时间，周转时间/服务时间)</li>
+<li>Throughput (吞吐率)</li>
+<li>Predictability(可预测性)</li>
+<li>Selection function(选择函数，确定在就绪进程中选择哪一个进程在下一次执行)</li>
+<li>Decision mode(决策模式，选择函数被执行瞬间的处理方式)</li>
+<li>Preemptive (抢占，当前正在执行的进程可能被操作系统中断，并转移到就绪态)</li>
+<li>Nonpreemptive(非抢占，一旦处于运行态就不断执行直到终止或者被阻塞)<h4 id="Process-Scheduling-Example"><a href="#Process-Scheduling-Example" class="headerlink" title="Process Scheduling Example"></a>Process Scheduling Example</h4><img src="https://img-blog.csdnimg.cn/20191231073548961.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><h4 id="1-First-Come-First-Served-FCFS"><a href="#1-First-Come-First-Served-FCFS" class="headerlink" title="1.First-Come-First-Served (FCFS)"></a>1.First-Come-First-Served (FCFS)</h4>*[First-Come-First-Served (FCFS)]:先来先服务<br><img src="https://img-blog.csdnimg.cn/20191231073718434.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></li>
+<li>Decision mode: Nonpreempitive</li>
+<li>Dispatch time: the current process ceases(终止) to execute</li>
+<li>Method: The oldest process in the Ready queue is selected<h4 id="2-Round-Robin-RR"><a href="#2-Round-Robin-RR" class="headerlink" title="2.Round-Robin (RR)"></a>2.Round-Robin (RR)</h4>*[Round-Robin (RR)]:轮转</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20191231073919444.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<ul>
+<li>Decision mode: preemption</li>
+<li>Dispatch time:  period  q based on a clock</li>
+<li>Method：select next process based on FCFS  <h4 id="3-Shortest-Process-Next-SPN"><a href="#3-Shortest-Process-Next-SPN" class="headerlink" title="3.Shortest Process Next (SPN)"></a>3.Shortest Process Next (SPN)</h4>*[Shortest Process Next (SPN)]:最短进程优先<br><img src="https://img-blog.csdnimg.cn/20191231074106519.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></li>
+<li>Decision mode: Nonpreemptive</li>
+<li>Dispatch time: the current process ceases to execute</li>
+<li>Method: Process with shortest expected processing time is selected next</li>
+<li>Predictability of longer processes is reduced(长进程的可预测性降低了)</li>
+<li>Possibility of starvation(饥饿) for longer processes<h4 id="4-Shortest-Remaining-Time-SRT"><a href="#4-Shortest-Remaining-Time-SRT" class="headerlink" title="4.Shortest Remaining Time (SRT)"></a>4.Shortest Remaining Time (SRT)</h4>*[Shortest Remaining Time (SRT)]:最短剩余时间<br><img src="https://img-blog.csdnimg.cn/20191231074411201.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></li>
+<li>Decision mode: Preemptive version of shortest process next</li>
+<li>Dispatch time: decision is made when a new process arrives</li>
+<li>Method: Process with shortest remaining time is selected next<h4 id="5-Highest-Response-Ratio-Next-HRRN"><a href="#5-Highest-Response-Ratio-Next-HRRN" class="headerlink" title="5.Highest Response Ratio Next (HRRN)"></a>5.Highest Response Ratio Next (HRRN)</h4>*[Highest Response Ratio Next (HRRN)]:最高响应比优先</li>
+<li>Decision mode: Nonpreemptive</li>
+<li>Dispatch time: the current process ceases to execute</li>
+<li>Method: Choose next process with the greatest response ratio<script type="math/tex; mode=display">R=\frac{TimeSpentWaiting + ExpectedServiceTime}{ExpectedServiceTime}</script><img src="https://img-blog.csdnimg.cn/20191231075052182.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><h4 id="6-Feedback"><a href="#6-Feedback" class="headerlink" title="6.Feedback"></a>6.Feedback</h4>*[Feedback]:反馈</li>
+<li>SPN/SRT/HRRN need to know process service time, while Feedback doesn’t</li>
+<li>Preemptive</li>
+<li>Penalize(惩罚) jobs that have been running longer<br><img src="https://img-blog.csdnimg.cn/20191231075209827.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyOTcxNzk0,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><blockquote>
+<p>前面介绍的各种用作进程调度的算法都有一定的局限性。如短进程优先的调度算法，仅照顾了短进程而忽略了长进程，而且如果并未指明进程的长度，则短进程优先和基于进程长度的抢占式调度算法都将无法使用。而多级反馈队列调度算法则不必事先知道各种进程所需的执行时间，而且还可以满足各种类型进程的需要，因而它是目前被公认的一种较好的进程调度算法。在采用多级反馈队列调度算法的系统中，调度算法的实施过程如下所述。<br>(1) 应设置多个就绪队列，并为各个队列赋予不同的优先级。第一个队列的优先级最高，第二个队列次之，其余各队列的优先权逐个降低。该算法赋予各个队列中进程执行时间片的大小也各不相同，在优先权愈高的队列中，为每个进程所规定的执行时间片就愈小。例如，第二个队列的时间片要比第一个队列的时间片长一倍，……，第i+1个队列的时间片要比第i个队列的时间片长一倍。<br>(2) 当一个新进程进入内存后，首先将它放入第一队列的末尾，按FCFS原则排队等待调度。当轮到该进程执行时，如它能在该时间片内完成，便可准备撤离系统；如果它在一个时间片结束时尚未完成，调度程序便将该进程转入第二队列的末尾，再同样地按FCFS原则等待调度执行；如果它在第二队列中运行一个时间片后仍未完成，再依次将它放入第三队列，……，如此下去，当一个长作业(进程)从第一队列依次降到第n队列后，在第n 队列便采取按时间片轮转的方式运行。<br>(3) 仅当第一队列空闲时，调度程序才调度第二队列中的进程运行；仅当第1～(i-1)队列均空时，才会调度第i队列中的进程运行。如果处理机正在第i队列中为某进程服务时，又有新进程进入优先权较高的队列(第1～(i-1)中的任何一个队列)，则此时新进程将抢占正在运行进程的处理机，即由调度程序把正在运行的进程放回到第i队列的末尾，把处理机分配给新到的高优先权进程。<br>————————————————<br>版权声明：本文为CSDN博主<a target="_blank" rel="noopener" href="https://me.csdn.net/daboluo521">@make great efforts</a>的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/daboluo521/article/details/79558066">原文链接</a></p>
+<h3 id="Fair-Share-Scheduling-公平共享调度"><a href="#Fair-Share-Scheduling-公平共享调度" class="headerlink" title="Fair-Share Scheduling(公平共享调度)"></a>Fair-Share Scheduling(公平共享调度)</h3></blockquote>
+</li>
+<li>User’s application runs as a collection of processes (threads)</li>
+<li>User is concerned about the performance of the application</li>
+<li>Need to make scheduling decisions based on <strong>process sets</strong></li>
+<li><p>Scheduling is done on the basis of </p>
+<ol>
+<li>under-lying priority of  the process</li>
+<li>recent processor usage of the process</li>
+<li>recent processor usage of the group</li>
+</ol>
+</li>
+<li><p>The higher the numerical value of the  priority, the  lower  the  priority.</p>
+</li>
+</ul>
+<h3 id="UnSolved-Question-3"><a href="#UnSolved-Question-3" class="headerlink" title="UnSolved Question"></a>UnSolved Question</h3><ol>
+<li>Typically, the swapping-in function for processes is based on the need to manage:<br>a. Virtual memory<br>b. The degree of multiprogramming √<br>c. None of the above<br>d. Process priorities<ol>
+<li>Response time in an interactive system is an example of:<br>a. System-oriented criteria for short-term scheduling policies<br>b. None of the above<br>c. User-oriented criteria for short-term scheduling policies √<br>d. System-oriented criteria for long-term scheduling policies</li>
+<li>In terms of the queuing model, the total time that a process spends in a system (waiting time plu s service time) is called:<br>a. None of the above<br>b. Normalized turnaround time (TAT)<br>c. Turnaround or residence time (TAT) √<br>d. Finish time (FT)<br><em>[Turnaround or residence time]:周转或驻留时间
+</em>[Normalized turnaround time]:标准化周转时间</li>
+</ol>
+</li>
+</ol>
+<h2 id="Chapter-11-I-O-Management-and-Disk-Scheduling"><a href="#Chapter-11-I-O-Management-and-Disk-Scheduling" class="headerlink" title="Chapter 11  I/O Management and Disk Scheduling"></a>Chapter 11  I/O Management and Disk Scheduling</h2><h3 id="Performing-I-O"><a href="#Performing-I-O" class="headerlink" title="Performing I/O"></a>Performing I/O</h3><ol>
+<li>Programmed I/O(可编程I/O)<br>Process is busy-waiting for the operation to complete</li>
+<li>Interrupt-driven I/O(中断驱动I/O)<br>I/O command is issued<br>Processor continues executing instructions<br>I/O module sends an interrupt when done</li>
+<li>Direct Memory Access (DMA,直接存储器访问)<br>DMA module controls exchange of data between main memory and the I/O device<br>Processor interrupted only after entire block has been transferred</li>
+</ol>
+<h3 id="I-O-Buffering"><a href="#I-O-Buffering" class="headerlink" title="I/O Buffering"></a>I/O Buffering</h3><ul>
+<li>Block-oriented(面向块)<br>Information is stored in fixed sized blocks<br>Transfers are made a block at a time<br>Used for disks and tapes</li>
+<li>Stream-oriented(面向流)<br>Transfers information as a stream of bytes<br>Used for terminals, printers, communication ports, mouse and other pointing devices, and most other devices that are not secondary storage</li>
+</ul>
+<h3 id="UnSolved-Question-4"><a href="#UnSolved-Question-4" class="headerlink" title="UnSolved Question"></a>UnSolved Question</h3><ol>
+<li>In a UNIX system, which of the following types of I/O devices make use of character queues:<br>a. Communications lines √<br>b. Tape drive<br>c. All of the above<br>d. Disk drive<ol>
+<li>The bus configuration for DMA that provides no path other than the system bus between the DM A module(s) and I/O devices is:<br>a. I/O bus<br>b. Single bus, detached DMA √<br>c. Single bus, integrated DMA-I/O<br>d. None of the above</li>
+<li>The scenario where multiple buffers are used in an attempt to alleviate the problem of absorbing rapid bursts of I/O is typically referred to as:<br>a. None of the above<br>b. Double buffering<br>c. Circular buffering √<br>d. Single buffering </li>
+</ol>
+</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="/about/">Xiao L.</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2022/12/10/Course%20Note/SCU/Undergrad%20Operating%20System%20Overview/">http://example.com/2022/12/10/Course%20Note/SCU/Undergrad%20Operating%20System%20Overview/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/OS/">OS</a></div><div class="post_share"><div class="social-share" data-image="/img/74.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2022/12/10/Course%20Note/Gatech/ECE%206607%20Computer%20Communication%20Network/"><img class="prev-cover" src="/img/1.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">ECE 6607 Computer Communication Network</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Xiao L.</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">82</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/luoxiao23333"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/luoxiao23333" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:lxiao70@gatech.edu" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="/www.linkedin.com/in/xiao-l-0489191a4" target="_blank" title="Linkedin"><i class="fab fa-linkedin"></i></a><a class="social-icon" href="https://blog.csdn.net/qq_42971794" target="_blank" title="CSDN"><i class="fas fa-blog"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-2-Operating-System-Overview"><span class="toc-number">1.</span> <span class="toc-text">Chapter 2 Operating System Overview</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#operating-System-definition%EF%BC%88%E5%AE%9A%E4%B9%89%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">operating System definition（定义）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Operating-System-Objectives-%EF%BC%88%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9B%AE%E6%A0%87%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">Operating System Objectives （操作系统目标）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kernel-%E5%86%85%E6%A0%B8"><span class="toc-number">1.3.</span> <span class="toc-text">Kernel(内核)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Job-Control-Language-JCL"><span class="toc-number">1.4.</span> <span class="toc-text">Job Control Language (JCL)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hardware-Features"><span class="toc-number">1.5.</span> <span class="toc-text">Hardware Features</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CPU-mode"><span class="toc-number">1.6.</span> <span class="toc-text">CPU mode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Processes-consists-of-three-components%EF%BC%88%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%B8%89%E4%B8%AA%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86%EF%BC%89"><span class="toc-number">1.7.</span> <span class="toc-text">Processes consists of three components（进程的三个组成部分）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-factors-that-should-be-considered%EF%BC%88%E5%BA%94%E8%80%83%E8%99%91%E7%9A%84%E5%9B%A0%E7%B4%A0%EF%BC%89"><span class="toc-number">1.8.</span> <span class="toc-text">The factors that should be considered（应考虑的因素）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OS-has-five-storage-management-responsibilities"><span class="toc-number">1.9.</span> <span class="toc-text">OS has five storage management responsibilities</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Virtual-Memory-VM"><span class="toc-number">1.10.</span> <span class="toc-text">Virtual Memory &#x2F; VM</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Page"><span class="toc-number">1.10.1.</span> <span class="toc-text">Page</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Virtual-Memory-Addressing"><span class="toc-number">1.10.2.</span> <span class="toc-text">Virtual Memory Addressing</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Symmetric-multiprocessing-SMP-%EF%BC%88%E5%AF%B9%E7%A7%B0%E5%A4%9A%E5%A4%84%E7%90%86%EF%BC%89"><span class="toc-number">1.11.</span> <span class="toc-text">Symmetric multiprocessing (SMP)  （对称多处理）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Distributed-operating-systems%EF%BC%88%E5%88%86%E5%B8%83%E5%BC%8F%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%89"><span class="toc-number">1.12.</span> <span class="toc-text">Distributed operating systems（分布式操作系统）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Object-oriented-design%EF%BC%88%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%EF%BC%89"><span class="toc-number">1.13.</span> <span class="toc-text">Object-oriented design（面向对象程序设计）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnSolve-Questions"><span class="toc-number">1.14.</span> <span class="toc-text">UnSolve Questions</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-3-Process-Description-and-Control"><span class="toc-number">2.</span> <span class="toc-text">Chapter 3  Process Description and Control</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Process-Control-Block-PCB-%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%9D%97"><span class="toc-number">2.1.</span> <span class="toc-text">Process Control Block (PCB) (进程控制块)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Two-State-Process-Model"><span class="toc-number">2.2.</span> <span class="toc-text">Two-State Process Model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Five-State-Model"><span class="toc-number">2.3.</span> <span class="toc-text">Five-State Model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Operating-System-Control-Structures"><span class="toc-number">2.4.</span> <span class="toc-text">Operating System Control Structures</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Memory-Tables"><span class="toc-number">2.5.</span> <span class="toc-text">Memory Tables</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I-O-Tables"><span class="toc-number">2.6.</span> <span class="toc-text">I&#x2F;O Tables</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#File-Tables"><span class="toc-number">2.7.</span> <span class="toc-text">File Tables</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Process-Table"><span class="toc-number">2.7.1.</span> <span class="toc-text">Process Table</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Process-Creation"><span class="toc-number">2.8.</span> <span class="toc-text">Process Creation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#When-to-Switch-a-Process"><span class="toc-number">2.9.</span> <span class="toc-text">When to Switch a Process</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Process-Switching"><span class="toc-number">2.10.</span> <span class="toc-text">Process Switching</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Execution-of-the-Operating-System"><span class="toc-number">2.11.</span> <span class="toc-text">Execution of the Operating System</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnSolved-Questions"><span class="toc-number">2.12.</span> <span class="toc-text">UnSolved Questions</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-4-Threads-SMP-and-Microkernels"><span class="toc-number">3.</span> <span class="toc-text">Chapter 4  Threads, SMP, and Microkernels</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E5%AE%9A%E4%B9%89"><span class="toc-number">3.1.</span> <span class="toc-text">线程和进程定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Benefits-%E4%BC%98%E7%82%B9-of-Threads"><span class="toc-number">3.2.</span> <span class="toc-text">Benefits(优点) of Threads</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#User-Level-Threads-ULT%EF%BC%8C%E7%94%A8%E6%88%B7%E7%BA%A7%E7%BA%BF%E7%A8%8B"><span class="toc-number">3.3.</span> <span class="toc-text">User-Level Threads (ULT，用户级线程)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kernel-Level-Threads-%E5%86%85%E6%A0%B8%E7%BA%A7%E7%BA%BF%E7%A8%8B"><span class="toc-number">3.4.</span> <span class="toc-text">Kernel-Level Threads(内核级线程)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Advantages-of-ULT-to-KLT"><span class="toc-number">3.5.</span> <span class="toc-text">Advantages of ULT to KLT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Disadvantages-of-ULT-to-KLT"><span class="toc-number">3.6.</span> <span class="toc-text">Disadvantages of ULT to KLT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Advantages-of-KLT-to-ULT"><span class="toc-number">3.7.</span> <span class="toc-text">Advantages of KLT to ULT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Disadvantages-of-KLT-to-ULT"><span class="toc-number">3.8.</span> <span class="toc-text">Disadvantages of KLT to ULT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Microkernel"><span class="toc-number">3.9.</span> <span class="toc-text">Microkernel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Benefits-of-a-Microkernel-Organization"><span class="toc-number">3.10.</span> <span class="toc-text">Benefits of a Microkernel Organization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Microkernel-Performance"><span class="toc-number">3.11.</span> <span class="toc-text">Microkernel Performance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Microkernel-Design"><span class="toc-number">3.12.</span> <span class="toc-text">Microkernel Design</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnSolved-Question"><span class="toc-number">3.13.</span> <span class="toc-text">UnSolved Question</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-5-Mutual-Exclusion-%E4%BA%92%E6%96%A5-and-Synchronization-%E5%90%8C%E6%AD%A5"><span class="toc-number">4.</span> <span class="toc-text">Chapter 5 Mutual Exclusion(互斥) and  Synchronization(同步)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Concurrency-arises-in-three-different-contexts"><span class="toc-number">4.1.</span> <span class="toc-text">Concurrency arises in three different contexts:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Some-Key-Term-Related-To-Currency"><span class="toc-number">4.2.</span> <span class="toc-text">Some Key Term Related To Currency</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Race-Condition-%E7%AB%9E%E4%BA%89%E6%9D%A1%E4%BB%B6"><span class="toc-number">4.3.</span> <span class="toc-text">Race Condition(竞争条件)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Process-Interactions%EF%BC%88%E8%BF%9B%E7%A8%8B%E4%BA%A4%E4%BA%92%EF%BC%89"><span class="toc-number">4.4.</span> <span class="toc-text">Process Interactions（进程交互）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Requirements-for-Mutual-Exclusion"><span class="toc-number">4.5.</span> <span class="toc-text">Requirements for Mutual Exclusion</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Implement-of-Semaphores"><span class="toc-number">4.6.</span> <span class="toc-text">Implement of Semaphores</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Monitors"><span class="toc-number">4.7.</span> <span class="toc-text">Monitors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Addressing"><span class="toc-number">4.8.</span> <span class="toc-text">Addressing</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Direct-addressing"><span class="toc-number">4.8.1.</span> <span class="toc-text">Direct addressing</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Indirect-addressing"><span class="toc-number">4.8.2.</span> <span class="toc-text">Indirect addressing</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Coroutines"><span class="toc-number">4.9.</span> <span class="toc-text">Coroutines</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Weak-Semaphore-And-Strong-Semaphore"><span class="toc-number">4.10.</span> <span class="toc-text">Weak Semaphore And Strong Semaphore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnSolvedQuestion"><span class="toc-number">4.11.</span> <span class="toc-text">UnSolvedQuestion</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-6-Concurrency-Deadlock-%E6%AD%BB%E9%94%81-and-Starvation-%E9%A5%A5%E9%A5%BF"><span class="toc-number">5.</span> <span class="toc-text">Chapter 6  Concurrency: Deadlock(死锁) and Starvation(饥饿)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Resources-Categories-%E8%B5%84%E6%BA%90%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">5.1.</span> <span class="toc-text">Resources Categories(资源的分类)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Reusable-Resources"><span class="toc-number">5.1.1.</span> <span class="toc-text">Reusable Resources</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Consumable-Resources"><span class="toc-number">5.1.2.</span> <span class="toc-text">Consumable Resources</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Restrictions-of-Deadlock-Avoidance"><span class="toc-number">5.2.</span> <span class="toc-text">Restrictions of Deadlock Avoidance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#An-Integrated-Deadlock-Strategy"><span class="toc-number">5.3.</span> <span class="toc-text">An Integrated Deadlock Strategy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95"><span class="toc-number">5.4.</span> <span class="toc-text">银行家算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnSolved-Question-1"><span class="toc-number">5.5.</span> <span class="toc-text">UnSolved Question</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-7-Memory-Management-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="toc-number">6.</span> <span class="toc-text">Chapter 7  Memory Management(内存管理)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Memory-Management"><span class="toc-number">6.1.</span> <span class="toc-text">Memory Management</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Memory-Management-Requirements"><span class="toc-number">6.2.</span> <span class="toc-text">Memory Management Requirements</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Memory-Partitioning"><span class="toc-number">6.3.</span> <span class="toc-text">Memory Partitioning</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Fixed-Partitioning"><span class="toc-number">6.3.1.</span> <span class="toc-text">1. Fixed Partitioning</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Dynamic-Partitioning"><span class="toc-number">6.3.2.</span> <span class="toc-text">2. Dynamic Partitioning</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Characteristics%EF%BC%9A"><span class="toc-number">6.3.2.1.</span> <span class="toc-text">Characteristics：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Dynamic-Partitioning-Placement-Algorithm"><span class="toc-number">6.3.2.2.</span> <span class="toc-text">Dynamic Partitioning Placement Algorithm:</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-Best-fit-algorithm"><span class="toc-number">6.3.2.2.1.</span> <span class="toc-text">1. Best-fit algorithm</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-First-fit-algorithm"><span class="toc-number">6.3.2.2.2.</span> <span class="toc-text">2. First-fit algorithm</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-Next-fit"><span class="toc-number">6.3.2.2.3.</span> <span class="toc-text">3. Next-fit</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Buddy-System"><span class="toc-number">6.3.3.</span> <span class="toc-text">3.Buddy System</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Relocation"><span class="toc-number">6.3.4.</span> <span class="toc-text">4.Relocation</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Paging"><span class="toc-number">6.4.</span> <span class="toc-text">Paging</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Segmentation"><span class="toc-number">6.5.</span> <span class="toc-text">Segmentation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-8-Virtual-Memory"><span class="toc-number">7.</span> <span class="toc-text">Chapter 8 Virtual Memory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Resident-set"><span class="toc-number">7.1.</span> <span class="toc-text">Resident set</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#When-an-address-is-needed-that-is-not-in-main-memory"><span class="toc-number">7.2.</span> <span class="toc-text">When an address is needed that is not in main memory:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Thrashing"><span class="toc-number">7.3.</span> <span class="toc-text">Thrashing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Inverted-Page-Table"><span class="toc-number">7.4.</span> <span class="toc-text">Inverted Page Table</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fetch-Policy"><span class="toc-number">7.5.</span> <span class="toc-text">Fetch Policy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Placement-Policy"><span class="toc-number">7.6.</span> <span class="toc-text">Placement Policy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Replacement-Policy"><span class="toc-number">7.7.</span> <span class="toc-text">Replacement Policy</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Frame-Locking"><span class="toc-number">7.7.1.</span> <span class="toc-text">Frame Locking</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-Optimal-policy"><span class="toc-number">7.7.1.1.</span> <span class="toc-text">1. Optimal policy</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Least-Recently-Used-LRU"><span class="toc-number">7.7.2.</span> <span class="toc-text">2. Least Recently Used (LRU)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-First-in-first-out-FIFO"><span class="toc-number">7.7.3.</span> <span class="toc-text">3.First-in, first-out (FIFO)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Clock-Policy"><span class="toc-number">7.7.4.</span> <span class="toc-text">4. Clock Policy</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Page-Buffering"><span class="toc-number">7.8.</span> <span class="toc-text">Page Buffering</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Process-Suspension"><span class="toc-number">7.9.</span> <span class="toc-text">Process Suspension</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnSolved-Question-2"><span class="toc-number">7.10.</span> <span class="toc-text">UnSolved Question</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-9-Uniprocessor-Scheduling"><span class="toc-number">8.</span> <span class="toc-text">Chapter 9 Uniprocessor Scheduling</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Types-of-Scheduling"><span class="toc-number">8.1.</span> <span class="toc-text">Types of Scheduling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Alternative-of-Scheduling-Policies"><span class="toc-number">8.2.</span> <span class="toc-text">Alternative of Scheduling Policies</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Terms"><span class="toc-number">8.2.1.</span> <span class="toc-text">Terms</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Process-Scheduling-Example"><span class="toc-number">8.2.2.</span> <span class="toc-text">Process Scheduling Example</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-First-Come-First-Served-FCFS"><span class="toc-number">8.2.3.</span> <span class="toc-text">1.First-Come-First-Served (FCFS)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Round-Robin-RR"><span class="toc-number">8.2.4.</span> <span class="toc-text">2.Round-Robin (RR)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Shortest-Process-Next-SPN"><span class="toc-number">8.2.5.</span> <span class="toc-text">3.Shortest Process Next (SPN)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Shortest-Remaining-Time-SRT"><span class="toc-number">8.2.6.</span> <span class="toc-text">4.Shortest Remaining Time (SRT)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Highest-Response-Ratio-Next-HRRN"><span class="toc-number">8.2.7.</span> <span class="toc-text">5.Highest Response Ratio Next (HRRN)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-Feedback"><span class="toc-number">8.2.8.</span> <span class="toc-text">6.Feedback</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fair-Share-Scheduling-%E5%85%AC%E5%B9%B3%E5%85%B1%E4%BA%AB%E8%B0%83%E5%BA%A6"><span class="toc-number">8.3.</span> <span class="toc-text">Fair-Share Scheduling(公平共享调度)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnSolved-Question-3"><span class="toc-number">8.4.</span> <span class="toc-text">UnSolved Question</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-11-I-O-Management-and-Disk-Scheduling"><span class="toc-number">9.</span> <span class="toc-text">Chapter 11  I&#x2F;O Management and Disk Scheduling</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Performing-I-O"><span class="toc-number">9.1.</span> <span class="toc-text">Performing I&#x2F;O</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I-O-Buffering"><span class="toc-number">9.2.</span> <span class="toc-text">I&#x2F;O Buffering</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UnSolved-Question-4"><span class="toc-number">9.3.</span> <span class="toc-text">UnSolved Question</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/12/10/Course%20Note/NYU/DS-GA-1003%20Lab1%20Linear%20Descent,%20SGD,%20and%20Regularization/" title="DS-GA-1003 Lab1 Linear Descent, SGD, and Regularization"><img src="/img/2.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DS-GA-1003 Lab1 Linear Descent, SGD, and Regularization"/></a><div class="content"><a class="title" href="/2022/12/10/Course%20Note/NYU/DS-GA-1003%20Lab1%20Linear%20Descent,%20SGD,%20and%20Regularization/" title="DS-GA-1003 Lab1 Linear Descent, SGD, and Regularization">DS-GA-1003 Lab1 Linear Descent, SGD, and Regularization</a><time datetime="2022-12-11T02:03:25.000Z" title="Created 2022-12-10 21:03:25">2022-12-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/10/Algorithm/A%20Research%20Problem%EF%BC%88%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0%EF%BC%8CDFS%EF%BC%89/" title="A Research Problem（欧拉函数，DFS）"><img src="/img/4.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="A Research Problem（欧拉函数，DFS）"/></a><div class="content"><a class="title" href="/2022/12/10/Algorithm/A%20Research%20Problem%EF%BC%88%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0%EF%BC%8CDFS%EF%BC%89/" title="A Research Problem（欧拉函数，DFS）">A Research Problem（欧拉函数，DFS）</a><time datetime="2022-12-11T02:03:25.000Z" title="Created 2022-12-10 21:03:25">2022-12-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/10/Algorithm/A%20Spy%20in%20the%20Metro/" title="A Spy in the Metro"><img src="/img/5.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="A Spy in the Metro"/></a><div class="content"><a class="title" href="/2022/12/10/Algorithm/A%20Spy%20in%20the%20Metro/" title="A Spy in the Metro">A Spy in the Metro</a><time datetime="2022-12-11T02:03:25.000Z" title="Created 2022-12-10 21:03:25">2022-12-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/10/Algorithm/And%20Then%20There%20Was%20One/" title="And Then There Was One"><img src="/img/7.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="And Then There Was One"/></a><div class="content"><a class="title" href="/2022/12/10/Algorithm/And%20Then%20There%20Was%20One/" title="And Then There Was One">And Then There Was One</a><time datetime="2022-12-11T02:03:25.000Z" title="Created 2022-12-10 21:03:25">2022-12-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/10/Algorithm/Almost%20Prime%20Numbers%EF%BC%88%E7%B4%A0%E6%95%B0%E7%AD%9B%EF%BC%89/" title="Almost Prime Numbers（素数筛）"><img src="/img/6.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Almost Prime Numbers（素数筛）"/></a><div class="content"><a class="title" href="/2022/12/10/Algorithm/Almost%20Prime%20Numbers%EF%BC%88%E7%B4%A0%E6%95%B0%E7%AD%9B%EF%BC%89/" title="Almost Prime Numbers（素数筛）">Almost Prime Numbers（素数筛）</a><time datetime="2022-12-11T02:03:25.000Z" title="Created 2022-12-10 21:03:25">2022-12-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Xiao L.</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

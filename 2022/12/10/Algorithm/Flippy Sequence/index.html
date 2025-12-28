@@ -1,0 +1,206 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Flippy Sequence | Always on the way</title><meta name="author" content="Xiao L.,lxiao70@gatech.edu"><meta name="copyright" content="Xiao L."><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="ZOJ  DreamGrid has just found two binary sequences $s_1, s_2, \dots, s_n$ and $t_1, t_2, \dots, t_n$ ($s_i, t_i \in {0, 1}$ for all $1 \le i \le n$) from his virtual machine! He would like to perform">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flippy Sequence">
+<meta property="og:url" content="http://example.com/2022/12/10/Algorithm/Flippy%20Sequence/index.html">
+<meta property="og:site_name" content="Always on the way">
+<meta property="og:description" content="ZOJ  DreamGrid has just found two binary sequences $s_1, s_2, \dots, s_n$ and $t_1, t_2, \dots, t_n$ ($s_i, t_i \in {0, 1}$ for all $1 \le i \le n$) from his virtual machine! He would like to perform">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/18.jpeg">
+<meta property="article:published_time" content="2022-12-11T02:03:25.000Z">
+<meta property="article:modified_time" content="2025-12-28T03:34:06.370Z">
+<meta property="article:author" content="Xiao L.">
+<meta property="article:tag" content="Algorithm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/18.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/12/10/Algorithm/Flippy%20Sequence/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Flippy Sequence',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2025-12-27 22:34:06'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">82</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-home"></i><span> Blog</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/LogseqNote/index.html#/page/Papers"><i class="fa-fw fas fa-sticky-note"></i><span> Research Note</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> Courses</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/GraduateCourses/"><i class="fa-fw fas fa-book"></i><span> Graduate Courses</span></a></li><li><a class="site-page child" href="/OnlineCourses/"><i class="fa-fw fas fa-book"></i><span> Online Courses</span></a></li><li><a class="site-page child" href="/UndergraduateCourses/"><i class="fa-fw fas fa-book"></i><span> Undergraduate</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/Link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/18.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Always on the way</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-home"></i><span> Blog</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/LogseqNote/index.html#/page/Papers"><i class="fa-fw fas fa-sticky-note"></i><span> Research Note</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> Courses</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/GraduateCourses/"><i class="fa-fw fas fa-book"></i><span> Graduate Courses</span></a></li><li><a class="site-page child" href="/OnlineCourses/"><i class="fa-fw fas fa-book"></i><span> Online Courses</span></a></li><li><a class="site-page child" href="/UndergraduateCourses/"><i class="fa-fw fas fa-book"></i><span> Undergraduate</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/Link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Flippy Sequence</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-12-11T02:03:25.000Z" title="Created 2022-12-10 21:03:25">2022-12-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-12-28T03:34:06.370Z" title="Updated 2025-12-27 22:34:06">2025-12-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Algorithm/">Algorithm</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Flippy Sequence"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><a target="_blank" rel="noopener" href="https://zoj.pintia.cn/problem-sets/91827364500/problems/91827370310">ZOJ</a></p>
+<blockquote>
+<p>DreamGrid has just found two binary sequences $s_1, s_2, \dots, s_n$ and $t_1, t_2, \dots, t_n$ ($s_i, t_i \in {0, 1}$ for all $1 \le i \le n$) from his virtual machine! He would like to perform the operation described below exactly twice, so that $s_i = t_i$ holds for all $1 \le i \le n$ after the two operations.<br>The operation is: Select two integers $l$ and $r$ ($1 \le l \le r \le n$), change $s_i$ to $(1 - s_i)$ for all $l \le i \le r$.<br>DreamGrid would like to know the number of ways to do so.<br>We use the following rules to determine whether two ways are different:<br>  Let $A = (a_1, a_2, a_3, a_4)$, where $1 \le a_1 \le a_2 \le n, 1 \le a_3 \le a_4 \le n$, be a valid operation pair denoting that DreamGrid selects integers $a_1$ and $a_2$ for the first operation and integers $a_3$ and $a_4$ for the second operation;<br> Let $B = (b_1, b_2, b_3, b_4)$, where $1 \le b_1 \le b_2 \le n, 1 \le b_3 \le b_4 \le n$, be another valid operation pair denoting that DreamGrid selects integers $b_1$ and $b_2$ for the first operation and integers $b_3$ and $b_4$ for the second operation.<br> $A$ and $B$ are considered different, if there exists an integer $k$ ($1 \le k \le 4$) such that $a_k \ne b_k$.<br> Input<br>There are multiple test cases. The first line of the input contains an integer $T$, indicating the number of test cases. For each test case:<br>The first line contains an integer $n$ ($1 \le n \le 10^6$), indicating the length of two binary sequences.<br>The second line contains a string $s_1s_2\dots s_n$ ($s_i \in {\text{‘0’}, \text{‘1’}}$) of length $n$, indicating the first binary sequence.<br>The third line contains a string $t_1t_2\dots t_n$ ($t_i \in {\text{‘0’}, \text{‘1’}}$) of length $n$, indicating the second binary sequence.<br>It’s guaranteed that the sum of $n$ in all test cases will not exceed $10^7$.<br>Output<br>For each test case, output an integer denoting the answer.<br>Sample Input<br>3<br>1<br>1<br>0<br>2<br>00<br>11<br>5<br>01010<br>00111<br> Sample Output<br>0<br>2<br>6<br> Hint<br>For the second sample test case, there are two valid operation pairs: (1, 1, 2, 2) and (2, 2, 1, 1).<br>For the third sample test case, there are six valid operation pairs: (2, 3, 5, 5), (5, 5, 2, 3), (2, 5, 4, 4), (4, 4, 2, 5), (2, 4, 4, 5) and (4, 5, 2, 4).</p>
+</blockquote>
+<p><strong>题目大意</strong>：有两个01相同长度的01串，可以分别对两串执行一次操作，问有多少种方案使得两串在操作后相等。一次操作是指选取某个串的一个区间，将区间中的串按位取反。</p>
+<p><strong>解决方案</strong>：分情况讨论：</p>
+<ol>
+<li>两个串初始是相等的。<br>那么此时，两次操作的区间要相同才能使操作后的两串相等。所以问题变成满足题意得$l,r$有多少种不同得组合。$Ans=(n)+(n-1)+\cdots +(1)=(n+1)*n/2$</li>
+<li><p>两个串初始只有一个连续的区间不同<br>那么此时，操作的目的就是把这段不同的区间变为相同。由于是01串，所以连续的不同的区间操作一次就相同了。设区间$[x,y]$为不相同的区间，如下图所示。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">A((1))--l---B((x))</span><br><span class="line">B--m---C((y))</span><br><span class="line">C--r---D((n))</span><br></pre></td></tr></table></figure>
+<p>由于不相同的区间只能操作一次，相同的区间必须呗操作0次或两次，设操作第一个串操作区间在左边，第二个在右边，那么，有三种操作类型。一是第一次操作覆盖$[l,x)$，第二次操作覆盖$[l,y]$，其中$1\leq l &lt;x$，此时有$(x-1)$种可能；二是第一次操作覆盖$[x,r]$，第二次操作覆盖$(y,r]$，其中$y&lt;r\leq n$，此时有$(n-y+1-1)$种可能；三是第一次操作覆盖$[x,m]$，第二次操作覆盖$(m,y]$此时有$(y-x)$种可能。综合三种情况相加，共有$(n-1)$中可能，根据对称性，第二次操作区间在第一次左边也是$(n-1)$种可能，所以$Ans=2*(n-1)$。</p>
+</li>
+<li><p>两个串有两个连续区间不相同。画个图数一数固定6种，和长度无关。</p>
+</li>
+<li>连续不同的区间超过2个。就两次操作机会，不可能还原的。</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">char</span> s[<span class="number">1000010</span>], t[<span class="number">1000010</span>];</span><br><span class="line"><span class="type">int</span> T;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> n;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;T);</span><br><span class="line">	<span class="keyword">while</span> (T--) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>, &amp;n);</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, s);</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, t);</span><br><span class="line">		<span class="type">int</span> Dif = <span class="number">0</span>, Length = <span class="number">0</span>;</span><br><span class="line">		<span class="type">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">			<span class="keyword">if</span> (s[i] == t[i]) &#123;</span><br><span class="line">				<span class="keyword">if</span> (Length != <span class="number">0</span>) &#123;</span><br><span class="line">					++Dif;</span><br><span class="line">					Length = <span class="number">0</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> &#123;</span><br><span class="line">				++Length;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (Length != <span class="number">0</span>) &#123;</span><br><span class="line">			++Dif;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">switch</span> (Dif)</span><br><span class="line">		&#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">0</span>: &#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>, n * (n + <span class="number">1</span>) / <span class="number">2</span>);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">1</span>: &#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>, <span class="number">2</span> * (n - <span class="number">1</span>));</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">2</span>: &#123;</span><br><span class="line">			<span class="built_in">puts</span>(<span class="string">&quot;6&quot;</span>);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">default</span>: &#123;</span><br><span class="line">			<span class="built_in">puts</span>(<span class="string">&quot;0&quot;</span>);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="/about/">Xiao L.</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2022/12/10/Algorithm/Flippy%20Sequence/">http://example.com/2022/12/10/Algorithm/Flippy%20Sequence/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Algorithm/">Algorithm</a></div><div class="post_share"><div class="social-share" data-image="/img/18.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/12/10/Algorithm/Forgery/"><img class="prev-cover" src="/img/19.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Forgery</div></div></a></div><div class="next-post pull-right"><a href="/2022/12/10/Algorithm/Game%20of%20Sum/"><img class="next-cover" src="/img/20.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Game of Sum</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2022/12/10/Algorithm/A%20Research%20Problem%EF%BC%88%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0%EF%BC%8CDFS%EF%BC%89/" title="A Research Problem（欧拉函数，DFS）"><img class="cover" src="/img/4.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-10</div><div class="title">A Research Problem（欧拉函数，DFS）</div></div></a></div><div><a href="/2022/12/10/Algorithm/A%20Spy%20in%20the%20Metro/" title="A Spy in the Metro"><img class="cover" src="/img/5.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-10</div><div class="title">A Spy in the Metro</div></div></a></div><div><a href="/2022/12/10/Algorithm/And%20Then%20There%20Was%20One/" title="And Then There Was One"><img class="cover" src="/img/7.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-10</div><div class="title">And Then There Was One</div></div></a></div><div><a href="/2022/12/10/Algorithm/Almost%20Prime%20Numbers%EF%BC%88%E7%B4%A0%E6%95%B0%E7%AD%9B%EF%BC%89/" title="Almost Prime Numbers（素数筛）"><img class="cover" src="/img/6.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-10</div><div class="title">Almost Prime Numbers（素数筛）</div></div></a></div><div><a href="/2022/12/10/Algorithm/Books/" title="Books"><img class="cover" src="/img/10.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-10</div><div class="title">Books</div></div></a></div><div><a href="/2022/12/10/Algorithm/Balloon%20Robot%EF%BC%88%E6%A8%A1%E6%8B%9F%EF%BC%89/" title="Balloon Robot（模拟）"><img class="cover" src="/img/9.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-10</div><div class="title">Balloon Robot（模拟）</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Xiao L.</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">82</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/luoxiao23333"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/luoxiao23333" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:lxiao70@gatech.edu" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="/www.linkedin.com/in/xiao-l-0489191a4" target="_blank" title="Linkedin"><i class="fab fa-linkedin"></i></a><a class="social-icon" href="https://blog.csdn.net/qq_42971794" target="_blank" title="CSDN"><i class="fas fa-blog"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/12/10/Course%20Note/NYU/DS-GA-1003%20Lab1%20Linear%20Descent,%20SGD,%20and%20Regularization/" title="DS-GA-1003 Lab1 Linear Descent, SGD, and Regularization"><img src="/img/2.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DS-GA-1003 Lab1 Linear Descent, SGD, and Regularization"/></a><div class="content"><a class="title" href="/2022/12/10/Course%20Note/NYU/DS-GA-1003%20Lab1%20Linear%20Descent,%20SGD,%20and%20Regularization/" title="DS-GA-1003 Lab1 Linear Descent, SGD, and Regularization">DS-GA-1003 Lab1 Linear Descent, SGD, and Regularization</a><time datetime="2022-12-11T02:03:25.000Z" title="Created 2022-12-10 21:03:25">2022-12-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/10/Algorithm/A%20Research%20Problem%EF%BC%88%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0%EF%BC%8CDFS%EF%BC%89/" title="A Research Problem（欧拉函数，DFS）"><img src="/img/4.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="A Research Problem（欧拉函数，DFS）"/></a><div class="content"><a class="title" href="/2022/12/10/Algorithm/A%20Research%20Problem%EF%BC%88%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0%EF%BC%8CDFS%EF%BC%89/" title="A Research Problem（欧拉函数，DFS）">A Research Problem（欧拉函数，DFS）</a><time datetime="2022-12-11T02:03:25.000Z" title="Created 2022-12-10 21:03:25">2022-12-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/10/Algorithm/A%20Spy%20in%20the%20Metro/" title="A Spy in the Metro"><img src="/img/5.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="A Spy in the Metro"/></a><div class="content"><a class="title" href="/2022/12/10/Algorithm/A%20Spy%20in%20the%20Metro/" title="A Spy in the Metro">A Spy in the Metro</a><time datetime="2022-12-11T02:03:25.000Z" title="Created 2022-12-10 21:03:25">2022-12-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/10/Algorithm/And%20Then%20There%20Was%20One/" title="And Then There Was One"><img src="/img/7.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="And Then There Was One"/></a><div class="content"><a class="title" href="/2022/12/10/Algorithm/And%20Then%20There%20Was%20One/" title="And Then There Was One">And Then There Was One</a><time datetime="2022-12-11T02:03:25.000Z" title="Created 2022-12-10 21:03:25">2022-12-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/10/Algorithm/Almost%20Prime%20Numbers%EF%BC%88%E7%B4%A0%E6%95%B0%E7%AD%9B%EF%BC%89/" title="Almost Prime Numbers（素数筛）"><img src="/img/6.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Almost Prime Numbers（素数筛）"/></a><div class="content"><a class="title" href="/2022/12/10/Algorithm/Almost%20Prime%20Numbers%EF%BC%88%E7%B4%A0%E6%95%B0%E7%AD%9B%EF%BC%89/" title="Almost Prime Numbers（素数筛）">Almost Prime Numbers（素数筛）</a><time datetime="2022-12-11T02:03:25.000Z" title="Created 2022-12-10 21:03:25">2022-12-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Xiao L.</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
